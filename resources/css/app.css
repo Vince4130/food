@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.title {
+    text-align: center;
+}
+
+.link {
+    display: flex;
+    column-gap: 20px;
+    justify-content: center;
+}
