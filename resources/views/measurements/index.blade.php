@@ -20,17 +20,39 @@
                                         <th>Poids (Kg)</th>
                                         <th>Taille (cm)</th>
                                         <th>Imc</th>
+                                        <th>Tendance</th>
                 
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $currentWeight = $previousWeight  = null; $count = 1 @endphp
                                     @foreach($mesures as $mesure)
                                     <tr>
                                         <td>{{ date('d/m/Y', strtotime($mesure->date)) }}</td>
                                         <td>{{ $mesure->weight }}</td>
                                         <td>{{ $mesure->height }}</td>
-                                        <td><?= round($mesure->weight/(($mesure->height)*$mesure->height)*10000, 2) ?></td>
+                                        <td>{{ round($mesure->weight/($mesure->height*$mesure->height)*10000, 2) }}</td>
+                                        <td>
+                                        <?php var_dump($loop->count) ?>
+                                            @if($loop->iteration = 1)
+                                                @php $currentWeight = $mesure @endphp
+                                                
+                                            @endif
+                                            @if($loop->iteration > 1) 
+                                                @php $previousWeight = $mesure @endphp
+                                                
+                                            @endif
+                                            @if($currentWeight && $previousWeight)
+                                                @if($currentWeight->weight > $previousWeight->weight)
+                                                    <i class="fa-solid fa-arrow-up-right-dots"></i>
+                                                    
+                                                @else 
+                                                    Perte de poids
+                                                @endif
+                                            @endif
+                                        </td>
                                     </tr>
+                                    
                                     @endforeach
                                 <tbody>
                             @else
