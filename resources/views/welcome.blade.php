@@ -1,7 +1,7 @@
 <x-guest-layout>
-    <h3 class="title">Welcome in Food App</h3>
+    <h3 class="title">Bienvenue sur Food</h3>
     <div class="link">
-        <a href="{{ route('dashboard') }}">Log In</a>
-        <a href="{{ route('register') }}">Register</a>
+        <a href="{{ route('dashboard') }}">{{ __('Login') }}</a>
+        <a href="{{ route('register') }}">{{ __('Register') }}</a>
     </div>
 </x-guest-layout>
