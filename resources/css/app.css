@@ -12,3 +12,8 @@
     column-gap: 20px;
     justify-content: center;
 }
+
+.sexe {
+    display:flex;
+    column-gap: 10px;
+}
