@@ -9,6 +9,32 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+         <!-- Firstname -->
+         <div class="mt-4">
+            <x-input-label for="firstname" :value="__('Firstname')" />
+            <x-text-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required autofocus autocomplete="firstname" />
+            <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
+        </div>
+
+        <!-- Birthdate -->
+        <div class="mt-4">
+            <x-input-label for="birth" :value="__('Birthdate')" />
+            <x-text-input id="birth" class="block mt-1 w-full" type="date" name="birth" :value="old('birth')" required autofocus autocomplete="birth" />
+            <x-input-error :messages="$errors->get('birth')" class="mt-2" />
+        </div>
+
+         <!-- Sexe -->
+         <div class="mt-4">
+            <x-input-label  for="sexe" :value="__('Sexe')" />
+            <div class="sexe mt-4">
+                <label for="homme">Homme</label>
+                <input id="homme" class="block mt-1" type="radio" name="sexe" value="h" {{ old('sexe') == 'h' ? 'checked' : '' }} required autofocus autocomplete="sexe" />
+                <label for="femme">Femme</label>
+                <input id="femme" class="block mt-1" type="radio" name="sexe" value="f" {{ old('sexe') == 'f' ? 'checked' : '' }} required autofocus autocomplete="sexe" />
+            </div>
+            <x-input-error :messages="$errors->get('sexe')" class="mt-2" />
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
