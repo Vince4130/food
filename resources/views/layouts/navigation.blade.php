@@ -36,7 +36,7 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('measurements.index')">
-                                    {{ __('Global Measures') }}
+                                    {{ __('Historique') }}
                                 </x-dropdown-link>
 
                                 <x-dropdown-link :href="route('logout')"

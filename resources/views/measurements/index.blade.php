@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Measurements') }}
+            Historique des mesures au {{ date('d/m/Y') }}
         </h2>
     </x-slot>
 
@@ -11,9 +11,9 @@
                 <div class="p-6 text-gray-900">
                     <div class="card">
                         <div class="card-body bg-light">
-                            <h5 class="container__title">Historique des mesures au {{ date('d/m/Y') }}</h5>
+                            <!-- <h5 class="container__title">Historique des mesures au {{ date('d/m/Y') }}</h5> -->
                             @if(count($mesures) > 0)
-                            <table id="author__table" class="table table-light authortable table-hover">
+                            <table id="mesure__table" class="table table-light authortable table-hover">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
