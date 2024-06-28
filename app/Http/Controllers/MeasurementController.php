@@ -20,9 +20,12 @@ class MeasurementController extends Controller
             ->select('date', 'weight', 'height')
             ->join('users', 'users.id', '=', 'measurements.user_id')
             ->where('users.id', $user->id)
-            ->paginate(10);
+            ->orderBy('date', 'desc')
+            ->get();
 
-        return view('measurements.index', ['user' => $user, 'mesures' => $mesures]);
+        $tendances = $this->weightTendance($mesures);
+
+        return view('measurements.index', ['user' => $user, 'mesures' => $mesures, 'tendances' => $tendances]);
     }
 
     /**
@@ -71,5 +74,32 @@ class MeasurementController extends Controller
     public function destroy(Measurement $measurement)
     {
         //
+    }
+
+    public function weightTendance($mesures) : Array
+    {
+        $weights = [];
+
+        $tendances = [];
+
+        foreach($mesures as $mesure) {
+            $weights [] = $mesure->weight;
+        }
+// dd($weights);
+        for($i=count($weights) - 1 ; $i > 0; $i--) {
+            if($weights[$i] < $weights[$i-1]) {
+                $tendances [] = "+";
+            } elseif($weights[$i] > $weights[$i-1]) {
+                $tendances [] = "-";
+            } elseif($weights[$i] == $weights[$i-1]) {
+                $tendances [] = "=";
+            }
+        }
+
+        $tendances = array_reverse($tendances);
+        
+        array_push($tendances, "N/A");
+// dd($tendances);
+        return $tendances;
     }
 }

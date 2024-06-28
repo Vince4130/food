@@ -20,17 +20,31 @@
                                         <th>Poids (Kg)</th>
                                         <th>Taille (cm)</th>
                                         <th>Imc</th>
+                                        <th>Tendance</th>
                 
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $count = 0 @endphp
                                     @foreach($mesures as $mesure)
                                     <tr>
                                         <td>{{ date('d/m/Y', strtotime($mesure->date)) }}</td>
                                         <td>{{ $mesure->weight }}</td>
                                         <td>{{ $mesure->height }}</td>
-                                        <td><?= round($mesure->weight/(($mesure->height)*$mesure->height)*10000, 2) ?></td>
+                                        <td>{{ round($mesure->weight/($mesure->height*$mesure->height)*10000, 2) }}</td>
+                                        <td>
+                                            @if($tendances[$count] == '+')
+                                                <img src="{{ asset('img/prise.png') }}" alt="prise" width="30" />
+                                            @elseif($tendances[$count] == '-')
+                                                <img src="{{ asset('img/perte.png') }}" alt="perte" width="30" />
+                                            @elseif($tendances[$count] == "=") 
+                                                <img src="{{ asset('img/stable.png') }}" alt="stable" width="25" />
+                                            @elseif($tendances[0])
+                                                -
+                                            @endif 
+                                        </td>
                                     </tr>
+                                    @php $count++ @endphp
                                     @endforeach
                                 <tbody>
                             @else
