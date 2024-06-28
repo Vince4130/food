@@ -25,7 +25,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php $currentWeight = $previousWeight  = null; $count = 1 @endphp
+                                    @php $count = 0 @endphp
                                     @foreach($mesures as $mesure)
                                     <tr>
                                         <td>{{ date('d/m/Y', strtotime($mesure->date)) }}</td>
@@ -33,26 +33,18 @@
                                         <td>{{ $mesure->height }}</td>
                                         <td>{{ round($mesure->weight/($mesure->height*$mesure->height)*10000, 2) }}</td>
                                         <td>
-                                        <?php var_dump($loop->count) ?>
-                                            @if($loop->iteration = 1)
-                                                @php $currentWeight = $mesure @endphp
-                                                
-                                            @endif
-                                            @if($loop->iteration > 1) 
-                                                @php $previousWeight = $mesure @endphp
-                                                
-                                            @endif
-                                            @if($currentWeight && $previousWeight)
-                                                @if($currentWeight->weight > $previousWeight->weight)
-                                                    <i class="fa-solid fa-arrow-up-right-dots"></i>
-                                                    
-                                                @else 
-                                                    Perte de poids
-                                                @endif
-                                            @endif
+                                            @if($tendances[$count] == '+')
+                                                <img src="{{ asset('img/prise.png') }}" alt="prise" width="30" />
+                                            @elseif($tendances[$count] == '-')
+                                                <img src="{{ asset('img/perte.png') }}" alt="perte" width="30" />
+                                            @elseif($tendances[$count] == "=") 
+                                                <img src="{{ asset('img/stable.png') }}" alt="stable" width="25" />
+                                            @elseif($tendances[0])
+                                                -
+                                            @endif 
                                         </td>
                                     </tr>
-                                    
+                                    @php $count++ @endphp
                                     @endforeach
                                 <tbody>
                             @else
