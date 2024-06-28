@@ -19,7 +19,13 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('/measurements')->group(function () {
         Route::get('/index', [MeasurementController::class, 'index'])->name('measurements.index');
-        Route::get('/show', [MeasurementController::class, 'index'])->name('measurements.show');
+        Route::get('/show', [MeasurementController::class, 'show'])->name('measurements.show');
+        Route::get('/create', [MeasurementController::class, 'create'])->name('measurements.create');
+        Route::post('/store', [MeasurementController::class, 'store'])->name('measurements.store');
+        Route::post('/store', [MeasurementController::class, 'store'])->name('measurements.store');
+        Route::get('/{measurement}/edit', [MeasurementController::class, 'edit'])->name('measurements.edit');
+        Route::post('/update/{measurement}', [MeasurementController::class, 'update'])->name('measurements.update');
+        Route::get('/delete/{measurement}', [MeasurementController::class, 'destroy'])->name('measurements.destroy');
     });
     
 });
