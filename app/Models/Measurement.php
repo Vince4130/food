@@ -18,5 +18,6 @@ class Measurement extends Model
         'weight',
         'height',
         'date',
+        'user_id'
     ];
 }

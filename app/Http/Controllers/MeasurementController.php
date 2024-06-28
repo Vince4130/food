@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MeasurementUpdateRequest;
 use App\Models\Measurement;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +20,7 @@ class MeasurementController extends Controller
         $user = $request->user();
 
         $mesures = DB::table('measurements')
-            ->select('date', 'weight', 'height')
+            ->select('measurements.id', 'date', 'weight', 'height')
             ->join('users', 'users.id', '=', 'measurements.user_id')
             ->where('users.id', $user->id)
             ->orderBy('date', 'desc')
@@ -31,17 +34,36 @@ class MeasurementController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user = $request->user();
+
+        return view('measurements.create', compact('user'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $request->validate([
+            'date' => ['required', 'date'],
+            'weight' => ['required', 'decimal:2'],
+            'height' => ['required', 'integer'],
+            'user_id' => ['required', 'integer'],
+        ]);
+
+        $measurement = Measurement::create([
+            'date' => $request->date,
+            'weight' => $request->weight,
+            'height' => $request->height,
+            'user_id' => $request->user_id,
+        ]);
+
+        event(new Registered($measurement));
+
+        return redirect(route('measurements.index', absolute: false));
+
     }
 
     /**
@@ -56,16 +78,23 @@ class MeasurementController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Measurement $measurement)
-    {
-        //
+    {   
+        return view('measurements.edit', ['measurement' => $measurement]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Measurement $measurement)
+    public function update(MeasurementUpdateRequest $request, Measurement $measurement): RedirectResponse
     {
-        //
+        $measurement->date = $request->input('date');
+        $measurement->weight = $request->input('weight');
+        $measurement->height = $request->input('height');
+        $measurement->id = $request->input('measurement_id');
+
+        $measurement->save();
+
+        return redirect(route('measurements.index'));
     }
 
     /**
@@ -73,9 +102,19 @@ class MeasurementController extends Controller
      */
     public function destroy(Measurement $measurement)
     {
-        //
-    }
+        $measurement->delete();
 
+        return redirect(route('measurements.index'));
+    }
+    
+    /**
+     * weightTendance
+     * Array of weigth tendances +, - , =
+     * for gain, loss or stable weight
+     *
+     * @param  mixed $mesures
+     * @return Array
+     */
     public function weightTendance($mesures) : Array
     {
         $weights = [];
@@ -85,7 +124,7 @@ class MeasurementController extends Controller
         foreach($mesures as $mesure) {
             $weights [] = $mesure->weight;
         }
-// dd($weights);
+
         for($i=count($weights) - 1 ; $i > 0; $i--) {
             if($weights[$i] < $weights[$i-1]) {
                 $tendances [] = "+";
@@ -99,7 +138,7 @@ class MeasurementController extends Controller
         $tendances = array_reverse($tendances);
         
         array_push($tendances, "N/A");
-// dd($tendances);
+
         return $tendances;
     }
 }

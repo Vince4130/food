@@ -21,7 +21,8 @@
                                         <th>Taille (cm)</th>
                                         <th>Imc</th>
                                         <th>Tendance</th>
-                
+                                        <th>Modifier</th>
+                                        <th>Supprimer</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,13 +44,23 @@
                                                 -
                                             @endif 
                                         </td>
+                                        <td> 
+                                            <a class="navbar-brand" href="{{ route('measurements.edit', $mesure->id) }}">
+                                                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="navbar-brand" href="{{ route('measurements.destroy', $mesure->id) }}">
+                                                <i class="fa-regular fa-trash-can fa-lg"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                     @php $count++ @endphp
                                     @endforeach
                                 <tbody>
                             @else
                                 <div class="mb-3">
-                                    <h4>There are no mesures saved</h4>
+                                    <h4>Aucune mesure n'a été enregistrée</h4>
                                 </div>
                             @endif
 
