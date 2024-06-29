@@ -9,12 +9,23 @@
 @import '@fortawesome/fontawesome-free/css/solid.css';
 @import '@fortawesome/fontawesome-free/css/brands.css';
 
-// .title {
-//     text-align: center;
-// }
+.title {
+    text-align: center;
+}
 
-// .link {
-//     display: flex;
-//     column-gap: 20px;
-//     justify-content: center;
-// }
+.welcome {
+    display: flex;
+    width: 400px;
+    height: 150px;
+    column-gap: 20px;
+    justify-content: center;
+    align-items: center;
+    &__link {
+        text-decoration: none;
+    }
+}
+
+.sexe {
+    display:flex;
+    column-gap: 10px;
+}
