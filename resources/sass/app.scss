@@ -9,12 +9,70 @@
 @import '@fortawesome/fontawesome-free/css/solid.css';
 @import '@fortawesome/fontawesome-free/css/brands.css';
 
-// .title {
-//     text-align: center;
-// }
+.title {
+    text-align: center;
+}
 
-// .link {
-//     display: flex;
-//     column-gap: 20px;
-//     justify-content: center;
-// }
+.welcome {
+    display: flex;
+    width: 400px;
+    height: 150px;
+    column-gap: 20px;
+    justify-content: center;
+    align-items: center;
+    &__link {
+        text-decoration: none;
+    }
+}
+
+.sexe {
+    display:flex;
+    column-gap: 10px;
+}
+.dashboard__data {
+    display: flex;
+    justify-content: space-around;
+    height: 300px;
+}
+
+.imc__donut {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+
+    &--justgage {
+        width: 220px;
+        text-align: center;
+    }
+}
+
+#donut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #ffff00 0deg 60deg,
+        #ffb800 60deg 120deg,
+        #ff6800 120deg 180deg,
+        #f44242 180deg 240deg,
+        #a3f5ff 240deg 300deg,
+        #54ce54 300deg 360deg
+    );
+}
+
+#donut::before {
+    content: "IMC";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #fff;
+}
+

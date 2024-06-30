@@ -10,6 +10,13 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.6.1/justgage.js" integrity="sha512-tWxvieYDBICxbDkkAlYex1Qu6dzMfPBzpzdYd+eu9IuBYSeUSpGn8W6AUQvbBfoaiFcDxXFl6qURZxFcJVFIRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.6.1/justgage.min.js" integrity="sha512-QeISJM4NCnUgZl5++o/2d4FwppF+Hh62RbNeA9paupnQvq5KAVvf2ZN3KD99EDoqcSHi1kbG13JMyRXDKBQBSw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'])
