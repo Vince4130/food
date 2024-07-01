@@ -36,7 +36,16 @@ $legend-opacity: 0.75;
 .dashboard__data {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     height: 350px;
+
+    &--weightsChart {
+        width: 800px;
+    }
+}
+
+.data__weight {
+    height: 450px;
 }
 
 .imc__donut {
