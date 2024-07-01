@@ -144,7 +144,7 @@ class DashboardController extends Controller
      */
     public function frenchMonth() : string 
     {
-        $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+        $months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 
         $mois = Carbon::now()->format('n');
 

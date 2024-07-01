@@ -196,7 +196,7 @@
         
         const labels = Object.keys(weights);
         const data   = Object.values(weights);
-
+        
         const formatData = data.map(value => value !== null ? value : NaN);
 
         new Chart(ctx, {
@@ -227,9 +227,22 @@
                     y: {
                         label: 'Poids',
                         beginAtZero: true,
-                        max: 200
+                        max: 160
                     }
                 },
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                yMin: 70,
+                                yMax: 70,
+                                borderColor: 'rgb(255, 99, 132)',
+                                borderWidth: 2,
+                            }
+                        }
+                    }
+                }
             }
         });
     </script>
