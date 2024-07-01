@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Decimal;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class DashboardController extends Controller
 {
@@ -15,8 +16,9 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        $firstDay = Carbon::now()->format('Y-m-01'); 
-        $lastDay  = Carbon::createFromFormat('Y-m-d', $firstDay)->endOfMonth()->format('Y-m-d');
+        $firstDay = Carbon::now()->startOfMonth()->format('Y-m-d'); //format('Y-m-01'); 
+        $lastDay  = Carbon::now()->endOfMonth()->format('Y-m-d');
+        
         $currentMonth = $this->frenchMonth($firstDay);
 
         $mesure = DB::table('measurements')
@@ -27,13 +29,13 @@ class DashboardController extends Controller
             ->first();
 
         $weights = DB::table('measurements')
-        ->select('weight')
-        ->join('users', 'users.id', '=', 'measurements.user_id')
-        ->where('users.id', $user->id)
-        ->where('date', '>=', $firstDay)
-        ->where('date', '<=', $lastDay)
-        ->orderBy('date')
-        ->get();
+            ->select('date', 'weight')
+            ->join('users', 'users.id', '=', 'measurements.user_id')
+            ->where('users.id', $user->id)
+            ->where('date', '>=', $firstDay)
+            ->where('date', '<=', $lastDay)
+            ->orderBy('date')
+            ->get();
     
         $imc = $this->calculateImc($mesure);
 
@@ -41,11 +43,13 @@ class DashboardController extends Controller
 
         $weightsRange   = $this->weightIndicator($mesure->height);
 
+        $weightsCurrentMonth = $this->getWeightsCurrentMonth($weights, $firstDay, $lastDay);
+
         return view('dashboard', [
             'imc' => $imc,
             'indicator' => $indicator,
             'mesure' => $mesure,
-            'weights' => $weights,
+            'weightsCurrentMonth' => $weightsCurrentMonth,
             'weightsRange' => $weightsRange,
             'currentMonth' => $currentMonth
         ]);   
@@ -146,4 +150,37 @@ class DashboardController extends Controller
 
         return $months[$mois-1];
     } 
+    
+    /**
+     * getWeightsCurrentMonth
+     * Retourne un tableau des poids du mois courant
+     * 
+     * @param  mixed $weights
+     * @param  mixed $firstDay
+     * @param  mixed $lastDay
+     * @return void
+     */
+    public function getWeightsCurrentMonth($weights, $firstDay, $lastDay)
+    {
+        $days = CarbonPeriod::create($firstDay, '1 day', $lastDay);
+
+        $daysOfMonth = [];
+        $weightOfDay = [];
+
+        foreach($days as $day) {
+            $day = $day->format('Y-m-d');
+            $daysOfMonth [$day] = null;
+        }
+
+        $weights = $weights->toArray();
+
+        foreach($weights as $weight) {
+            $weightOfDay [$weight->date] = $weight->weight;
+        }
+       
+        $weightsOfMonth = array_merge($daysOfMonth, $weightOfDay);
+
+        return $weightsOfMonth;
+    }
+
 }
