@@ -58,9 +58,9 @@
                 <div class="p-6 text-gray-900">
                     {{ __("Courbe de poids du mois de ") }} {{ $currentMonth }}
                 </div>
-                <div class="dashboard__data">
-                    <input type="hidden" name="weights" id="weights" value="{{ json_encode($weights) }}">   
-                    <div>
+                <div class="dashboard__data data__weight">
+                    <input type="hidden" name="weights" id="weights" value="{{ json_encode($weightsCurrentMonth) }}">   
+                    <div class="dashboard__data--weightsChart">
                         <canvas id="weightsChart"></canvas>
                     </div>
                 </div>
@@ -190,49 +190,47 @@
         });
     </script>
     <script>
-        const ctx     = document.getElementById('weightsChart');
+        const ctx   = document.getElementById('weightsChart');
         var weights = document.querySelector("#weights").value;
         weights = JSON.parse(weights);
+        
+        const labels = Object.keys(weights);
+        const data   = Object.values(weights);
 
-        for(i=0; i < weights.length; i++) {
-            weights[i] = Math.floor(weights[i]*100)/100;
-        }
-        console.log(weights);
+        const formatData = data.map(value => value !== null ? value : NaN);
+
         new Chart(ctx, {
             type: 'line',
             data: {
-                // labels: ['Obésité Modérée', 'Obésité Sévère', 'Obésité Morbide', 'Maigre', 'Normal', 'Surpoids'],
+                labels: labels,
                 datasets: [{
                     label: 'Poids en Kg',
                     data: weights,
-                    borderWidth: 1
+                    borderWidth: 1,
+                    fill: false
                 }]
             },
             options: {
+                locale: "fr-FR",
+                responsive: true,
                 scales: {
-                    // x: {
-                    //     type: 'time',
-                    //     time: {
-                    //         unit: 'day'
-                    //     }
-                    // },
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            tooltypeFormat: 'DD/MM/YYYY',
+                            displayFormats: {
+                                day: 'dd MM'
+                            }
+                        }
+                    },
                     y: {
                         label: 'Poids',
-                        min: 0,
-                        max: 150
+                        beginAtZero: true,
+                        max: 200
                     }
-                }
+                },
             }
-            // options: {
-            //     scales: {
-            //         x: {
-            //             type: 'time',
-            //             time: {
-            //                 unit: 'month'
-            //             }
-            //         }
-            //     }
-            // }
         });
     </script>
 
