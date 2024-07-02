@@ -67,6 +67,34 @@
             </div>
         </div>
     </div>
+
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __("Calcul poids idéal") }}
+                </div>
+                <div class="dashboard__idealweight">
+                    
+                    <input type="hidden" name="idealWeight" id="idealWeight" value="{{ json_encode($mesure) }}">   
+                    <div class="dashboard__idealweight--lorentz" id="lorentz">
+                        <p>
+                            {{ __("Selon la formule de Lorentz")}}
+                        </p>
+                    </div>
+
+                    <input type="hidden" name="idealWeightCreff" id="idealWeightCreff" value="{{ $age }}">
+                    <div class="dashboard__idealweight--creff" id="creff">
+                        <p>
+                            {{ __("Selon la formule de Creff")}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // var myColors = [
         //     "#a3f5ff",
@@ -77,15 +105,33 @@
         //     "#f44242"
         // ];
 
+        // Récupération des données
         var myImc    = document.querySelector("#myImc").value;
         var myWeight = document.querySelector("#myWeight").value;
         var range =  document.querySelector("#range").value;
-        range = JSON.parse(range);
+        var idealWeight = document.querySelector("#idealWeight").value;
 
+        range = JSON.parse(range);
+        idealWeight = JSON.parse(idealWeight);
+
+        // Calcul du poids ideal 
+        var height = idealWeight.height;
+        var gender = idealWeight.sexe;
+        var coef = NaN;
+
+        if(gender = 'h') {
+            coef = 4;
+        } else {
+            coef = 2.5;
+        }
+
+        var lorentz = height - 100 - ((height -150)/coef);
+    
         for(i=0; i < range.length; i++) {
             range[i] = Math.floor(range[i]*100)/100;
         }
 
+        // Jauge IMC
         var g1 = new JustGage({
             id: "imc",
             value: myImc,
@@ -137,6 +183,7 @@
             relativeGaugeSize: true
         });
 
+        // Jauge poids actuel
         var g2 = new JustGage({
             id: "weight",
             value: myWeight,
@@ -172,6 +219,40 @@
                     color: "#f44242",
                     lo: range[4],
                     hi: 300
+                }]
+            },
+            pointer: true,
+            pointerOptions: {
+                toplength: -15,
+                bottomlength: 10,
+                bottomwidth: 12,
+                color: '#8e8e93',
+                stroke: '#ffffff',
+                stroke_width: 3,
+                stroke_linecap: 'round'
+            },
+            gaugeWidthScale: 0.6,
+            counter: true,
+            relativeGaugeSize: true
+        });
+
+        var g3 = new JustGage({
+            id: "lorentz",
+            value: lorentz,
+            min: 0,
+            max: 200,
+            donut: true,
+            decimals: 2,
+            title: "Poids idéal",
+            customSectors: {
+                ranges: [{
+                    color: "#54ce54",
+                    lo: 0,
+                    hi: lorentz
+                }, {
+                    color: "#f44242",
+                    lo: lorentz + 0.01,
+                    hi: 200
                 }]
             },
             pointer: true,

@@ -47,6 +47,19 @@ $legend-opacity: 0.75;
     }
 }
 
+.dashboard__idealweight {
+    display: flex;
+    align-items: center;
+    height: 350px;
+
+    &--lorentz {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 300px;
+    }
+}
+
 .data__weight {
     height: 500px;
 }
