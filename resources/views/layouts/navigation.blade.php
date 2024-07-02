@@ -19,6 +19,10 @@
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                         {{ __('Profil') }}
                     </x-nav-link>
+                    
+                    <x-nav-link :href="route('morphologies.create')" :active="request()->routeIs('morphologies.create')">
+                        {{ __('Morphologie') }}
+                    </x-nav-link>
 
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <x-dropdown align="left" width="48">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MeasurementController;
+use App\Http\Controllers\MorphologyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,10 +26,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/show', [MeasurementController::class, 'show'])->name('measurements.show');
         Route::get('/create', [MeasurementController::class, 'create'])->name('measurements.create');
         Route::post('/store', [MeasurementController::class, 'store'])->name('measurements.store');
-        Route::post('/store', [MeasurementController::class, 'store'])->name('measurements.store');
         Route::get('/{measurement}/edit', [MeasurementController::class, 'edit'])->name('measurements.edit');
         Route::post('/update/{measurement}', [MeasurementController::class, 'update'])->name('measurements.update');
         Route::get('/delete/{measurement}', [MeasurementController::class, 'destroy'])->name('measurements.destroy');
+    });
+    
+    Route::prefix('/morphologies')->group(function () {
+        Route::get('/create', [MorphologyController::class, 'create'])->name('morphologies.create');
+        Route::post('/store', [MorphologyController::class, 'store'])->name('morphologies.store');
+        Route::get('/{morphology}/edit', [MorphologyController::class, 'edit'])->name('morphologies.edit');
+        Route::post('/update/{morphology}', [MorphologyController::class, 'update'])->name('morphologies.update');
+        Route::delete('/delete/{morphology}', [MorphologyController::class, 'destroy'])->name('morphologies.destroy');
     });
     
 });
