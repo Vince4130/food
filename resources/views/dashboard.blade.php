@@ -196,7 +196,7 @@
         
         const labels = Object.keys(weights);
         const data   = Object.values(weights);
-        
+        console.log(labels);
         const formatData = data.map(value => value !== null ? value : NaN);
 
         new Chart(ctx, {
@@ -207,7 +207,8 @@
                     label: 'Poids en Kg',
                     data: weights,
                     borderWidth: 1,
-                    fill: false
+                    fill: false,
+                    tension: 0.1
                 }]
             },
             options: {
@@ -239,7 +240,15 @@
                                 yMax: 70,
                                 borderColor: 'rgb(255, 99, 132)',
                                 borderWidth: 2,
-                            }
+                            },
+                            label: {
+                                display: true,
+                                content: 'Poids Cible 70 kg',
+                                // yValue: 70,
+                                color: 'rgb(255, 99, 132)',
+                                backgroundColor: '#ffff',
+                                position: 'start',
+                            },
                         }
                     }
                 }

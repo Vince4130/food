@@ -40,12 +40,15 @@ $legend-opacity: 0.75;
     height: 350px;
 
     &--weightsChart {
+        display: flex;
+        justify-content: center;
         width: 800px;
+        height: 400px;
     }
 }
 
 .data__weight {
-    height: 600px;
+    height: 500px;
 }
 
 .imc__donut {
