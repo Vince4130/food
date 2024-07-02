@@ -16,13 +16,19 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        $firstDay = Carbon::now()->startOfMonth()->format('Y-m-d'); //format('Y-m-01'); 
-        $lastDay  = Carbon::now()->endOfMonth()->format('Y-m-d');
-        
+        $birthdate = $user->birth;
+
+        $firstDay   = Carbon::now()->startOfMonth()->format('Y-m-d'); //format('Y-m-01'); 
+        $lastDay    = Carbon::now()->endOfMonth()->format('Y-m-d');
+        $currentDay = Carbon::now()->format('Y-m-d');
+
+        $age = Carbon::createFromDate($birthdate)->diffInYears($currentDay);
+        $age = (int)$age;
+
         $currentMonth = $this->frenchMonth($firstDay);
 
         $mesure = DB::table('measurements')
-            ->select('measurements.id', 'date', 'weight', 'height')
+            ->select('measurements.id', 'date', 'weight', 'height', 'sexe')
             ->join('users', 'users.id', '=', 'measurements.user_id')
             ->where('users.id', $user->id)
             ->orderByDesc('date')
@@ -51,6 +57,7 @@ class DashboardController extends Controller
             'mesure' => $mesure,
             'weightsCurrentMonth' => $weightsCurrentMonth,
             'weightsRange' => $weightsRange,
+            'age' => $age,
             'currentMonth' => $currentMonth
         ]);   
     }
