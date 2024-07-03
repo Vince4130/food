@@ -15,7 +15,10 @@ class dataAnses extends SpreadsheetSeeder
     {
         // By default, the seeder will process all XLSX files in /database/seeds/*.xlsx (relative to Laravel project base path)
         
-        // Example setting
+        // Mapping de ce seeder sur le fichier concerné uniquement
+        $set->file = ['/database/seeders/food_data_formated.xlsx'];
+
+        // Mapping feuilles excel -> table de la base
         $set->worksheetTableMapping = ['alim_grps' => 'alim_grps', 
                                        'alim_ss_grps' => 'alim_ss_grps', 
                                        'alim_ss_ss_grps' => 'alim_ss_ss_grps', 
