@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('alim_grps', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
+            $table->string('alim_grp_code');
+            $table->string('alim_grp_nom_fr');
             $table->timestamps();
         });
     }

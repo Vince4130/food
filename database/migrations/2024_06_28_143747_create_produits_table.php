@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('produits', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('nomSci');
+            $table->string('alim_code');
+            $table->string('alim_nom_fr');
+            $table->string('alim_nom_sci');
             $table->timestamps();
         });
     }
