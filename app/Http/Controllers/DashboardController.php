@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Measurement;
 use App\Models\User;
+use App\Models\Morphology;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Decimal;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Ramsey\Uuid\Type\Integer;
 
 class DashboardController extends Controller
 {
@@ -27,37 +29,34 @@ class DashboardController extends Controller
 
         $currentMonth = $this->frenchMonth($firstDay);
 
-        $mesure = DB::table('measurements')
-            ->select('measurements.id', 'date', 'weight', 'height', 'sexe')
-            ->join('users', 'users.id', '=', 'measurements.user_id')
-            ->where('users.id', $user->id)
-            ->orderByDesc('date')
-            ->first();
+        $mesure = Measurement::getUserLastMesure($user);
 
-        $weights = DB::table('measurements')
-            ->select('date', 'weight')
-            ->join('users', 'users.id', '=', 'measurements.user_id')
-            ->where('users.id', $user->id)
-            ->where('date', '>=', $firstDay)
-            ->where('date', '<=', $lastDay)
-            ->orderBy('date')
-            ->get();
+        $mesures = Measurement::getUserMesuresOfCurrentMonth($user, $firstDay, $lastDay);
     
+        $morpho = Morphology::getUserMorphology($user);
+
+        $morphoCoefficient = $this->getCoeffMorpho($morpho);
+            
         $imc = $this->calculateImc($mesure);
 
         $indicator = $this->imcIndicator($imc);
 
-        $weightsRange   = $this->weightIndicator($mesure->height);
+        $weightsRange = $this->weightIndicator($mesure->height);
 
-        $weightsCurrentMonth = $this->getWeightsCurrentMonth($weights, $firstDay, $lastDay);
+        $mesuresCurrentMonth = $this->getMesuresCurrentMonth($mesures, $firstDay, $lastDay);
+
+        $weightsCurrentMonth = $mesuresCurrentMonth[0];
+        $imcsCurrentMonth    = $mesuresCurrentMonth[1];
 
         return view('dashboard', [
             'imc' => $imc,
             'indicator' => $indicator,
             'mesure' => $mesure,
             'weightsCurrentMonth' => $weightsCurrentMonth,
+            'imcsCurrentMonth' => $imcsCurrentMonth ,
             'weightsRange' => $weightsRange,
             'age' => $age,
+            'morphoCoefficient' =>  $morphoCoefficient,
             'currentMonth' => $currentMonth
         ]);   
     }
@@ -142,7 +141,6 @@ class DashboardController extends Controller
         return $weights;
     }
 
-    
     /**
      * frenchMonth
      * Retourne le mois courant en français
@@ -158,36 +156,74 @@ class DashboardController extends Controller
         return $months[$mois-1];
     } 
     
+ 
+         
     /**
-     * getWeightsCurrentMonth
-     * Retourne un tableau des poids du mois courant
-     * 
-     * @param  mixed $weights
+     * getMesuresCurrentMonth
+     *
+     * @param  mixed $mesures
      * @param  mixed $firstDay
      * @param  mixed $lastDay
      * @return void
      */
-    public function getWeightsCurrentMonth($weights, $firstDay, $lastDay)
+    public function getMesuresCurrentMonth($mesures, $firstDay, $lastDay)
     {
         $days = CarbonPeriod::create($firstDay, '1 day', $lastDay);
 
         $daysOfMonth = [];
+        $mesuresOfMonth = [];
         $weightOfDay = [];
+        $imcOfDay    = [];
+
 
         foreach($days as $day) {
             $day = $day->format('Y-m-d');
             $daysOfMonth [$day] = null;
         }
 
-        $weights = $weights->toArray();
+        $mesures = $mesures->toArray();
 
-        foreach($weights as $weight) {
-            $weightOfDay [$weight->date] = $weight->weight;
+        foreach($mesures as $mesure) {
+            $imcOfDay [$mesure->date] = $mesure->weight/($mesure->height*$mesure->height)*10000;;
         }
        
-        $weightsOfMonth = array_merge($daysOfMonth, $weightOfDay);
+        foreach($mesures as $mesure) {
+            $weightOfDay [$mesure->date] = $mesure->weight;
+        }
 
-        return $weightsOfMonth;
+        $weightsOfMonth = array_merge($daysOfMonth, $weightOfDay);
+        $imcOfMonth     = array_merge($daysOfMonth, $imcOfDay);
+
+        $mesuresOfMonth = [$weightsOfMonth, $imcOfMonth];
+
+        return $mesuresOfMonth;
+    }
+    
+    /**
+     * getCoeffMorpho
+     *
+     * @param  mixed $morpho
+     * @return float
+     */
+    public function getCoeffMorpho(string $morpho): float
+    {
+        $coeff = 0;
+
+        switch($morpho) {
+            case 'slim' :
+                $coeff = 0.81;
+                break;
+            case 'normal' :
+                $coeff = 0.9;
+                break;
+            case 'large' :
+                $coeff = 0.99;
+                break;
+            default:
+                $coeff = 1;
+        }
+
+        return $coeff;
     }
 
 }
