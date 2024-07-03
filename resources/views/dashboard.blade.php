@@ -68,6 +68,21 @@
         </div>
     </div>
 
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __("Courbe imc du mois de ") }} {{ $currentMonth }}
+                </div>
+                <div class="dashboard__data data__imc">
+                    <input type="hidden" name="imcs" id="imcs" value="{{ json_encode($imcsCurrentMonth) }}">   
+                    <div class="dashboard__data--imcsChart">
+                        <canvas id="imcsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -84,7 +99,8 @@
                         </p>
                     </div>
 
-                    <input type="hidden" name="idealWeightCreff" id="idealWeightCreff" value="{{ $age }}">
+                    <input type="hidden" name="age" id="age" value="{{ $age }}">
+                    <input type="hidden" name="morphoCoefficient" id="morphoCoefficient" value="{{ $morphoCoefficient }}">
                     <div class="dashboard__idealweight--creff" id="creff">
                         <p>
                             {{ __("Selon la formule de Creff")}}
@@ -110,11 +126,13 @@
         var myWeight = document.querySelector("#myWeight").value;
         var range =  document.querySelector("#range").value;
         var idealWeight = document.querySelector("#idealWeight").value;
+        var age = document.querySelector("#age").value;
+        var morphoCoefficient = document.querySelector("#morphoCoefficient").value;
 
         range = JSON.parse(range);
         idealWeight = JSON.parse(idealWeight);
 
-        // Calcul du poids ideal 
+        // Calcul du poids ideal formule de Lorentz et Creff
         var height = idealWeight.height;
         var gender = idealWeight.sexe;
         var coef = NaN;
@@ -126,7 +144,8 @@
         }
 
         var lorentz = height - 100 - ((height -150)/coef);
-    
+        var creff   = (height - 100 + age/10)*morphoCoefficient;
+
         for(i=0; i < range.length; i++) {
             range[i] = Math.floor(range[i]*100)/100;
         }
@@ -236,6 +255,7 @@
             relativeGaugeSize: true
         });
 
+        // Jauge poids idéal formule de Lorentz
         var g3 = new JustGage({
             id: "lorentz",
             value: lorentz,
@@ -269,16 +289,59 @@
             counter: true,
             relativeGaugeSize: true
         });
+
+        // Jauge poids idéal formule de Creff
+        var g4 = new JustGage({
+            id: "creff",
+            value: creff,
+            min: 0,
+            max: 200,
+            donut: true,
+            decimals: 2,
+            title: "Poids idéal",
+            customSectors: {
+                ranges: [{
+                    color: "#54ce54",
+                    lo: 0,
+                    hi: lorentz
+                }, {
+                    color: "#f44242",
+                    lo: lorentz + 0.01,
+                    hi: 200
+                }]
+            },
+            pointer: true,
+            pointerOptions: {
+                toplength: -15,
+                bottomlength: 10,
+                bottomwidth: 12,
+                color: '#8e8e93',
+                stroke: '#ffffff',
+                stroke_width: 3,
+                stroke_linecap: 'round'
+            },
+            gaugeWidthScale: 0.6,
+            counter: true,
+            relativeGaugeSize: true
+        });
     </script>
     <script>
         const ctx   = document.getElementById('weightsChart');
+        const ctxImc = document.getElementById('imcsChart');
         var weights = document.querySelector("#weights").value;
+        var imcs    = document.querySelector("#imcs").value;
         weights = JSON.parse(weights);
+        imcs    = JSON.parse(imcs);
         
         const labels = Object.keys(weights);
         const data   = Object.values(weights);
         console.log(labels);
         const formatData = data.map(value => value !== null ? value : NaN);
+
+        const labelsI = Object.keys(imcs);
+        const dataI   = Object.values(imcs);
+        console.log(labels);
+        const formatDataI = dataI.map(value => value !== null ? value : NaN);
 
         new Chart(ctx, {
             type: 'line',
@@ -325,6 +388,62 @@
                             label: {
                                 display: true,
                                 content: 'Poids Cible 70 kg',
+                                // yValue: 70,
+                                color: 'rgb(255, 99, 132)',
+                                backgroundColor: '#ffff',
+                                position: 'start',
+                            },
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(ctxImc, {
+            type: 'line',
+            data: {
+                labels: labelsI,
+                datasets: [{
+                    label: 'Imc',
+                    data: imcs,
+                    borderWidth: 1,
+                    fill: false,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                locale: "fr-FR",
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            tooltypeFormat: 'DD/MM/YYYY',
+                            displayFormats: {
+                                day: 'dd MM'
+                            }
+                        }
+                    },
+                    y: {
+                        label: 'Imc',
+                        beginAtZero: true,
+                        max: 50
+                    }
+                },
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                yMin: 22.9,
+                                yMax: 22.9,
+                                borderColor: 'rgb(255, 99, 132)',
+                                borderWidth: 2,
+                            },
+                            label: {
+                                display: true,
+                                content: 'Imc Cible',
                                 // yValue: 70,
                                 color: 'rgb(255, 99, 132)',
                                 backgroundColor: '#ffff',

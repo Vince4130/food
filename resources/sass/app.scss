@@ -39,7 +39,7 @@ $legend-opacity: 0.75;
     align-items: center;
     height: 350px;
 
-    &--weightsChart {
+    &--weightsChart, &--imcsChart {
         display: flex;
         justify-content: center;
         width: 800px;
@@ -49,10 +49,12 @@ $legend-opacity: 0.75;
 
 .dashboard__idealweight {
     display: flex;
+    justify-content: center;
+    column-gap: 150px;
     align-items: center;
     height: 350px;
 
-    &--lorentz {
+    &--lorentz, &--creff {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -60,7 +62,7 @@ $legend-opacity: 0.75;
     }
 }
 
-.data__weight {
+.data__weight, .data__imc {
     height: 500px;
 }
 
