@@ -10,17 +10,40 @@ use App\Models\User;
 class Morphology extends Model
 {
     use HasFactory;
-
-
-    public static function getUserMorphology(User $user): string
+    
+    /**
+     * getUserAllMorphology
+     *
+     * @param  mixed $user
+     * @return Object
+     */
+    public static function getUserAllMorphology(User $user): Object
+    {
+        $morphologies = DB::table('morphologies')
+            ->select('morphologies.id', 'morpho', 'date', 'user_id')
+            ->join('users', 'users.id', '=', 'morphologies.user_id')
+            ->where('users.id', $user->id)
+            ->orderByDesc('date')
+            ->get();
+        
+        return $morphologies;
+    }
+    
+    /**
+     * getUserMorphology
+     *
+     * @param  mixed $user
+     * @return Object
+     */
+    public static function getUserMorphology(User $user): Object
     {
         $morpho = DB::table('morphologies')
-            ->select('morpho')
+            ->select('morpho', 'date', 'user_id')
             ->join('users', 'users.id', '=', 'morphologies.user_id')
             ->where('users.id', $user->id)
             ->first();
         
-        return $morpho->morpho;
+        return $morpho;
     }
     
     /**

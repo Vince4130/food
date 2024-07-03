@@ -35,7 +35,7 @@ class DashboardController extends Controller
     
         $morpho = Morphology::getUserMorphology($user);
 
-        $morphoCoefficient = $this->getCoeffMorpho($morpho);
+        $morphoCoefficient = $this->getCoeffMorpho($morpho->morpho);
             
         $imc = $this->calculateImc($mesure);
 
