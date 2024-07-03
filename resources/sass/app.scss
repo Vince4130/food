@@ -9,6 +9,9 @@
 @import '@fortawesome/fontawesome-free/css/solid.css';
 @import '@fortawesome/fontawesome-free/css/brands.css';
 
+
+$legend-opacity: 0.75;
+
 .title {
     text-align: center;
 }
@@ -25,22 +28,51 @@
     }
 }
 
-.sexe {
+.sexe, .morpho {
     display:flex;
     column-gap: 10px;
 }
+
 .dashboard__data {
     display: flex;
     justify-content: space-around;
-    height: 300px;
+    align-items: center;
+    height: 350px;
+
+    &--weightsChart, &--imcsChart {
+        display: flex;
+        justify-content: center;
+        width: 800px;
+        height: 400px;
+    }
+}
+
+.dashboard__idealweight {
+    display: flex;
+    justify-content: center;
+    column-gap: 150px;
+    align-items: center;
+    height: 350px;
+
+    &--lorentz, &--creff {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 300px;
+    }
+}
+
+.data__weight, .data__imc {
+    height: 500px;
 }
 
 .imc__donut {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
+    width: 600px;
     height: 300px;
+    column-gap: 100px;
 
     &--justgage {
         width: 220px;
@@ -76,3 +108,51 @@
     background: #fff;
 }
 
+.imc__legend {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 5px;
+    width: 300px;
+    height: 300px;
+    font-size: smaller;
+    cursor: default;
+
+    &--cat {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 140px;
+        height: 40px;
+        opacity: $legend-opacity;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &--maigre {
+        background-color: #a3f5ff;
+    }
+
+    &--normale {
+        background-color: #54ce54;
+    }
+
+    &--surpoids {
+        background-color: #ffff00;
+    }
+
+    &--obesitemod {
+        background-color: #ffb800;
+    }
+
+    &--obesitesev {
+        background-color : #ff6800;
+    }
+
+    &--obesitemor {
+        background-color : #f44242 ;
+    }
+}

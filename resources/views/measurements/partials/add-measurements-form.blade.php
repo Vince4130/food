@@ -32,7 +32,7 @@
         <div class="block mt-4">
             <div >
                 <x-input-label for="height" :value="__('Taille (cm)')" />
-                <x-text-input id="height" class="block mt-1 w-full" type="number" name="height" :value="old('height')" step="1" min="100" required autofocus autocomplete="height" />
+                <x-text-input id="height" class="block mt-1 w-full" type="number" name="height" :value="old('height', $height->height)" step="1" min="100" required autofocus autocomplete="height" />
                 <x-input-error :messages="$errors->get('height')" class="mt-2" />
             </div>
         </div>

@@ -37,8 +37,14 @@ class MeasurementController extends Controller
     public function create(Request $request)
     {
         $user = $request->user();
+        
+        $height = DB::table('measurements')
+            ->select('height')
+            ->join('users', 'users.id', '=', 'measurements.user_id')
+            ->where('users.id', $user->id)
+            ->first();
 
-        return view('measurements.create', compact('user'));
+        return view('measurements.create', ['user' => $user, 'height' => $height]);
     }
 
     /**
