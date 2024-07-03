@@ -38,9 +38,10 @@ class Morphology extends Model
     public static function getUserMorphology(User $user): Object
     {
         $morpho = DB::table('morphologies')
-            ->select('morpho', 'date', 'user_id')
+            ->select('morphologies.id', 'morpho', 'date', 'user_id')
             ->join('users', 'users.id', '=', 'morphologies.user_id')
             ->where('users.id', $user->id)
+            ->orderByDesc('id')
             ->first();
         
         return $morpho;

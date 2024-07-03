@@ -9,9 +9,9 @@
         </p>
     </header>
 
-    <form method="post" action="{{ route('morphologies.update', ['morphology' => $morphology]) }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('morphologies.update', $morphology->id) }}" class="mt-6 space-y-6">
         @csrf
-
+<?php var_dump($morphology); ?>
         <input type="hidden" name="date" id="date" value="{{ $morphology->date }}">
         <input type="hidden" name="morphology_id" id="morphology_id" value="{{ $morphology->id }}">
 
@@ -21,7 +21,7 @@
                 <input id="slim" class="block mt-1" type="radio" name="morpho" value="slim" {{ $morphology->morpho == 'slim' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
 
                 <label for="normal">Normale</label>
-                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" {{ $morphology->morpho == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
+                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" {{ $morphology->morpho == 'normal' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
 
                 <label for="large">Large</label>
                 <input id="large" class="block mt-1" type="radio" name="morpho" value="large" {{ $morphology->morpho == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />

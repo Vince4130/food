@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Measurement;
 use App\Models\Morphology;
+use App\Models\User; 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Registered;
+use Ramsey\Uuid\Type\Integer;
 
 class MorphologyController extends Controller
 {
@@ -67,14 +69,13 @@ class MorphologyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Morphology $morpho)
+    public function edit(int $userId)
     {
-        dd($morpho);
-        // $user = $request->user();
-        
-        // $morphology = Morphology::getUserMorphology($user);
+        $user = User::find($userId);
 
-        return view('morphologies.edit', ['morpho' => $morpho]);
+        $morphology = Morphology::getUserMorphology($user);
+
+        return view('morphologies.edit', ['morphology' => $morphology]);
     }
 
     /**
@@ -82,14 +83,13 @@ class MorphologyController extends Controller
      */
     public function update(Request $request, Morphology $morphology): RedirectResponse
     {
-        dd($morphology);
         $morphology->morpho = $request->input('morpho');
         $morphology->date = $request->input('date');
-        $morphology->user_id = $request->input('morphology_id');
+        $morphology->id = $request->input('morphology_id');
         
         $morphology->save();
 
-        return redirect(route('dashboard'));
+        return redirect(route('morphologies.edit', $morphology->user_id));
     }
 
     /**

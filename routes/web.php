@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/index', [MorphologyController::class, 'index'])->name('morphologies.index');
         Route::get('/create', [MorphologyController::class, 'create'])->name('morphologies.create');
         Route::post('/store', [MorphologyController::class, 'store'])->name('morphologies.store');
-        Route::get('/{morphology}/edit', [MorphologyController::class, 'edit'])->name('morphologies.edit');
+        Route::get('/{id}/edit', [MorphologyController::class, 'edit'])->name('morphologies.edit');
         Route::post('/update/{morphology}', [MorphologyController::class, 'update'])->name('morphologies.update');
         Route::delete('/delete/{morphology}', [MorphologyController::class, 'destroy'])->name('morphologies.destroy');
     });

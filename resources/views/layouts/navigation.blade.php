@@ -34,12 +34,12 @@
                                 </button>
                             </x-slot>
 
-                            <x-slot name="content">
-                            <x-dropdown-link :href="route('morphologies.index')" >
-                                    {{ __('Historique') }}
-                                </x-dropdown-link>    
+                            <x-slot name="content">   
                                 <x-dropdown-link :href="route('morphologies.create')">
                                     {{ __('Saisir') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('morphologies.edit', Auth::user()->id)" >
+                                    {{ __('Update') }}
                                 </x-dropdown-link> 
                             </x-slot>
                         </x-dropdown>
