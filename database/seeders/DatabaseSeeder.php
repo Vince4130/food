@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use bfinlay\SpreadsheetSeeder\SpreadsheetSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +19,11 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        // Appel du seeder chargeant les datas de l'ANSES dans la base via le fichier source.xls
+        $this->call([
+            SpreadsheetSeeder::class,
         ]);
     }
 }

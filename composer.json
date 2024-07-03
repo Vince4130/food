@@ -12,6 +12,7 @@
         "phpoffice/phpspreadsheet": "^2.1"
     },
     "require-dev": {
+        "bfinlay/laravel-excel-seeder": "^1.2",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.1",
         "laravel/pint": "^1.13",
