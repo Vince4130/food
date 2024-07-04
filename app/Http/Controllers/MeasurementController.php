@@ -19,12 +19,7 @@ class MeasurementController extends Controller
     {
         $user = $request->user();
 
-        $mesures = DB::table('measurements')
-            ->select('measurements.id', 'date', 'weight', 'height')
-            ->join('users', 'users.id', '=', 'measurements.user_id')
-            ->where('users.id', $user->id)
-            ->orderBy('date', 'desc')
-            ->get();
+        $mesures = Measurement::getUserAllMesure($user);
 
         $tendances = $this->weightTendance($mesures);
 
@@ -38,11 +33,7 @@ class MeasurementController extends Controller
     {
         $user = $request->user();
         
-        $height = DB::table('measurements')
-            ->select('height')
-            ->join('users', 'users.id', '=', 'measurements.user_id')
-            ->where('users.id', $user->id)
-            ->first();
+        $height = Measurement::getUserHeight($user);
 
         return view('measurements.create', ['user' => $user, 'height' => $height]);
     }

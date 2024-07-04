@@ -1,12 +1,12 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Information sur votre morphologie') }}
+            {{ __('Saisir votre morphologie au ') }} {{ date('d/m/Y') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
+        <!-- <p class="mt-1 text-sm text-gray-600">
             {{ __("Saisir votre morphologie.") }}
-        </p>
+        </p> -->
     </header>
 
     <form method="POST" action="{{ route('morphologies.store') }}">
@@ -23,7 +23,7 @@
                 <input id="slim" class="block mt-1" type="radio" name="morpho" value="slim" {{ old('morpho') == 'slim' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
 
                 <label for="normal">Normale</label>
-                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" checked required autofocus autocomplete="morpho" />
+                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" {{ old('morpho') == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
 
                 <label for="large">Large</label>
                 <input id="large" class="block mt-1" type="radio" name="morpho" value="large" {{ old('morpho') == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />

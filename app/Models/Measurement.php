@@ -7,10 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use PhpParser\Node\Expr\Cast\Object_;
+use Ramsey\Uuid\Type\Integer;
 
 class Measurement extends Model
 {
     use HasFactory;
+    
+    
+    /**
+     * getUserAllMesure
+     *
+     * @param  mixed $user
+     * @return Object
+     */
+    public static function getUserAllMesure(User $user): Object
+    {
+        $mesures = DB::table('measurements')
+            ->select('measurements.id', 'date', 'weight', 'height')
+            ->join('users', 'users.id', '=', 'measurements.user_id')
+            ->where('users.id', $user->id)
+            ->orderBy('date', 'desc')
+            ->get();
+        
+        return $mesures;
+    }
     
     /**
      * getUserLastMesure
@@ -50,6 +70,24 @@ class Measurement extends Model
             ->get();
 
         return $weights;
+    }
+    
+    
+    /**
+     * getUserHeight
+     *
+     * @param  mixed $user
+     * @return void
+     */
+    public static function getUserHeight(User $user)
+    {
+        $height = DB::table('measurements')
+            ->select('height')
+            ->join('users', 'users.id', '=', 'measurements.user_id')
+            ->where('users.id', $user->id)
+            ->first();
+        
+        return $height;
     }
     
      /**
