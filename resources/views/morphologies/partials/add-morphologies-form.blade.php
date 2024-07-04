@@ -28,6 +28,7 @@
                 <label for="large">Large</label>
                 <input id="large" class="block mt-1" type="radio" name="morpho" value="large" {{ old('morpho') == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
             </div>
+            <x-input-error :messages="$errors->get('date')" class="mt-2" />
             <x-input-error :messages="$errors->get('morpho')" class="mt-2" />
         </div>
 

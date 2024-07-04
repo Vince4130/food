@@ -44,7 +44,7 @@ class MeasurementController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'date' => ['required', 'date'],
+            'date' => ['bail', 'required', 'unique:measurements,date', 'after:tomorrow'],
             'weight' => ['required', 'decimal:2'],
             'height' => ['required', 'integer'],
             'user_id' => ['required', 'integer'],

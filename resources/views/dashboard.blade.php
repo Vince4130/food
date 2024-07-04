@@ -95,7 +95,7 @@
                     <input type="hidden" name="idealWeight" id="idealWeight" value="{{ json_encode($mesure) }}">   
                     <div class="dashboard__idealweight--lorentz" id="lorentz">
                         <p>
-                            {{ __("Selon la formule de Lorentz")}}
+                            {{ __("Selon la formule de Lorentz")}}  
                         </p>
                     </div>
 
@@ -103,7 +103,7 @@
                     <input type="hidden" name="morphoCoefficient" id="morphoCoefficient" value="{{ $morphoCoefficient }}">
                     <div class="dashboard__idealweight--creff" id="creff">
                         <p>
-                            {{ __("Selon la formule de Creff")}}
+                            {{ __("Selon la formule de Creff ")}} (morphologie actuelle : {{ ($morpho->morpho == 'normal') ? 'normale' : (($morpho->morpho == 'slim') ? 'mince' : 'large') }})
                         </p>
                     </div>
                 </div>
@@ -303,10 +303,10 @@
                 ranges: [{
                     color: "#54ce54",
                     lo: 0,
-                    hi: lorentz
+                    hi: creff
                 }, {
                     color: "#f44242",
-                    lo: lorentz + 0.01,
+                    lo: creff + 0.01,
                     hi: 200
                 }]
             },

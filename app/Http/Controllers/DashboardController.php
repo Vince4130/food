@@ -56,6 +56,7 @@ class DashboardController extends Controller
             'imcsCurrentMonth' => $imcsCurrentMonth ,
             'weightsRange' => $weightsRange,
             'age' => $age,
+            'morpho' => $morpho,
             'morphoCoefficient' =>  $morphoCoefficient,
             'currentMonth' => $currentMonth
         ]);   
