@@ -1,22 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Dashboard') }} de {{ $user->pseudo }} : {{ $mesure->height/100 }} m, {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
         </h2>
     </x-slot>
 
-    <!-- <div class="anchor pagination">
-        <p class="page-item">
-            <a class="page-link anchor__link" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
-        </p>
-    </div>     -->
-
     <div class="py-12">
-    <div class="anchor pagination">
-        <p class="page-item">
-            <a class="page-link anchor__link" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
-        </p>
-    </div>
+
+        <div class="anchor pagination">
+            <p class="page-item">
+                <a class="page-link anchor__link" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
+            </p>
+        </div>
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">

@@ -49,6 +49,7 @@ class DashboardController extends Controller
         $imcsCurrentMonth    = $mesuresCurrentMonth[1];
 
         return view('dashboard', [
+            'user' => $user,
             'imc' => $imc,
             'indicator' => $indicator,
             'mesure' => $mesure,
