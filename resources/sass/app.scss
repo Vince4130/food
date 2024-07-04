@@ -161,12 +161,11 @@ $legend-opacity: 0.75;
 
 
 .anchor {
-    width: 200px;
     display: flex;
     justify-content: center;
+    width: 200px;
+    height: 54px;
     opacity: $legend-opacity;
-    margin-top: 15px;
-    margin-bottom: 15px;
     color: black;
 
     &__link {
