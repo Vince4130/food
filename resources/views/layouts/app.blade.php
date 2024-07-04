@@ -24,7 +24,7 @@
         @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100" id="top">
             @include('layouts.navigation')
 
             <!-- Page Heading -->

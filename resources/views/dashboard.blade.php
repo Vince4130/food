@@ -5,6 +5,12 @@
         </h2>
     </x-slot>
 
+    <div class="anchor pagination">
+        <p class="page-item">
+            <a class="page-link anchor__link" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
+        </p>
+    </div>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -109,6 +115,13 @@
                 </div>
             </div>
         </div>
+
+        <div class="anchor pagination" id="bottom">
+            <p class="page-item">
+                <a class="page-link anchor__link" href="#top"><i class="fa-regular fa-square-caret-up fa-2xl"></i></a>
+            </p>
+        </div>
+        
     </div>
 
     <script>
