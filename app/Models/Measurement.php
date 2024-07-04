@@ -27,7 +27,7 @@ class Measurement extends Model
             ->join('users', 'users.id', '=', 'measurements.user_id')
             ->where('users.id', $user->id)
             ->orderBy('date', 'desc')
-            ->get();
+            ->paginate(10);
         
         return $mesures;
     }
