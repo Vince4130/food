@@ -42,20 +42,22 @@ class MorphologyController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'date' => ['required', 'date'],
+            'date' => ['required', 'unique:morphologies,date'],
             'morpho' => ['required', 'string'],
             'user_id' => ['required', 'integer'],
         ]);
+
+        $exist = Morphology::where('date', $request->date)->count();
 
         $morphology = Morphology::create([
             'date' => $request->date,
             'morpho' => $request->morpho,
             'user_id' => $request->user_id,
         ]);
-
+        
         event(new Registered($morphology));
 
-        return redirect(route('dashboard'));
+        return redirect(route('dashboard'));  
     }
 
     /**
