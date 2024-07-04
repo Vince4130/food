@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('nutrition_mesures', function (Blueprint $table) {
             $table->id();
+            $table->string('alim_code');
             $table->string('Energie, Règlement UE N° 1169/2011 (kJ/100 g)');
             $table->string('Energie, Règlement UE N° 1169/2011 (kcal/100 g)');
             $table->string('Energie, N x facteur Jones, avec fibres  (kJ/100 g)');
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->string('Fructose (g/100 g)');
             $table->string('Galactose (g/100 g)');
             $table->string('Glucose (g/100 g)');
-            $table->string('Lactose (g/100 g)');
+            $table->string('Lactose (g/100  g)');
             $table->string('Maltose (g/100 g)');
             $table->string('Saccharose (g/100 g)');
             $table->string('Amidon (g/100 g)');
