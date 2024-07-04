@@ -11,7 +11,7 @@
 
     <form method="post" action="{{ route('morphologies.update', $morphology->id) }}" class="mt-6 space-y-6">
         @csrf
-<?php var_dump($morphology); ?>
+        
         <input type="hidden" name="date" id="date" value="{{ $morphology->date }}">
         <input type="hidden" name="morphology_id" id="morphology_id" value="{{ $morphology->id }}">
 
