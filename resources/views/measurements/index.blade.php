@@ -58,6 +58,13 @@
                                     @php $count++ @endphp
                                     @endforeach
                                 <tbody>
+                            </table>
+                            
+                            <!-- Pagination Links -->
+                            <div>
+                                {{ $mesures->links() }}
+                            </div>
+
                             @else
                                 <div class="mb-3">
                                     <h4>Aucune mesure n'a été enregistrée</h4>
