@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Response;
 use Ramsey\Uuid\Type\Integer;
 
 class MorphologyController extends Controller
@@ -41,23 +42,30 @@ class MorphologyController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'date' => ['required', 'unique:morphologies,date'],
-            'morpho' => ['required', 'string'],
-            'user_id' => ['required', 'integer'],
-        ]);
-
-        $exist = Morphology::where('date', $request->date)->count();
-
-        $morphology = Morphology::create([
-            'date' => $request->date,
-            'morpho' => $request->morpho,
-            'user_id' => $request->user_id,
-        ]);
+        $exist = Morphology::where('date', $request->date)->where('user_id', $request->user_id)->count();
         
-        event(new Registered($morphology));
+        $user = User::find($request->user_id);
 
-        return redirect(route('dashboard'));  
+        if($exist === 0) {
+            $request->validate([
+                'date' => ['required', 'date'],
+                'morpho' => ['required', 'string'],
+                'user_id' => ['required', 'integer'],
+            ]);
+
+        
+            $morphology = Morphology::create([
+                'date' => $request->date,
+                'morpho' => $request->morpho,
+                'user_id' => $request->user_id,
+            ]);
+            
+            event(new Registered($morphology));
+            
+            return redirect(route('morphologies.edit', $user->id))->with('status', 'Morphologie enregistrée.'); 
+        } 
+
+        return back()->with('status', 'Morphologie déjà saisie pour cette date.'); 
     }
 
     /**
@@ -83,7 +91,7 @@ class MorphologyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Morphology $morphology): RedirectResponse
+    public function update(Request $request, Morphology $morphology)
     {
         $morphology->morpho = $request->input('morpho');
         $morphology->date = $request->input('date');
@@ -91,7 +99,7 @@ class MorphologyController extends Controller
         
         $morphology->save();
 
-        return redirect(route('morphologies.edit', $morphology->user_id));
+        return redirect(route('morphologies.edit', $morphology->user_id))->with('statusOk', 'Morphologie mofifiée avec succès.');;
     }
 
     /**

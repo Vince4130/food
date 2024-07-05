@@ -3,7 +3,16 @@
         <h2 class="text-lg font-medium text-gray-900">
             {{ __('Morphologie enregistrée le ') }} {{ date('d/m/Y', strtotime($morphology->date)) }}
         </h2>
-
+        @if (session('status'))
+            <ul class="text-sm text-red-600 space-y-1 mt-2">
+                <li>{{ session('status') }}</li>
+            </ul>
+         @endif
+         @if (session('statusOk'))
+            <ul class="text-sm text-green-600 space-y-1 mt-2">
+                <li>{{ session('statusOk') }}</li>
+            </ul>
+         @endif
         <p class="mt-1 text-sm text-gray-600">
             {{ __("Mettre à jour votre morphologie.") }}
         </p>

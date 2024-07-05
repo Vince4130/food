@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Carbon\Carbon;
 
 class Morphology extends Model
 {
@@ -17,7 +18,7 @@ class Morphology extends Model
      * @param  mixed $user
      * @return Object
      */
-    public static function getUserAllMorphology(User $user): Object
+    public static function getUserAllMorphology(User $user): ?Object
     {
         $morphologies = DB::table('morphologies')
             ->select('morphologies.id', 'morpho', 'date', 'user_id')
@@ -35,7 +36,7 @@ class Morphology extends Model
      * @param  mixed $user
      * @return Object
      */
-    public static function getUserMorphology(User $user): Object
+    public static function getUserMorphology(User $user): ?Object
     {
         $morpho = DB::table('morphologies')
             ->select('morphologies.id', 'morpho', 'date', 'user_id')
