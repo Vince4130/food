@@ -1,12 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }} de {{ ($user->pseudo != null) ? $user->pseudo : $user->firstname }} : {{ $mesure->height/100 }} m, {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
+            {{ __('Dashboard') }} de {{ ($user->pseudo != null) ? $user->pseudo : $user->firstname }} : {{ ($mesure !== null) ? $mesure->height/100 : '' }}  {{ ($mesure !== null) ? ' m,' : '' }} {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
         </h2>
     </x-slot>
 
+    @if($mesure !== null)
     <div class="py-12">
-
+        
         <div class="anchor pagination">
             <p class="page-item">
                 <a class="page-link anchor__link" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
@@ -16,7 +17,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    {{ __("Vos dernières mesure d'IMC et poids enregistrés le ") }} {{ date('d/m/Y', strtotime($mesure->date)) }}
+                    {{ __("Vos dernières mesure d'IMC et poids enregistrés : ") }} {{ ($mesure !== null) ? date('d/m/Y', strtotime($mesure->date)) : 'aucune données à ce jour' }}
                 </div>
                 <div class="dashboard__data">
                     <!-- <div class="imc__donut">
@@ -122,9 +123,25 @@
                 <a class="page-link anchor__link" href="#top"><i class="fa-regular fa-square-caret-up fa-2xl"></i></a>
             </p>
         </div>
-
+    
     </div>
-
+    @else 
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="card">
+                        <div class="card-body bg-light">
+                            <div class="mb-3 emptyMesures">
+                                <h4>Aucune mesure n'a été enregistrée</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     <script>
         // var myColors = [
         //     "#a3f5ff",
