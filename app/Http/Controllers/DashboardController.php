@@ -41,7 +41,7 @@ class DashboardController extends Controller
 
         $indicator = $this->imcIndicator($imc);
 
-        $weightsRange = $this->weightIndicator($mesure->height);
+        $weightsRange = $this->weightIndicator($mesure->height ?? 0);
 
         $mesuresCurrentMonth = $this->getMesuresCurrentMonth($mesures, $firstDay, $lastDay);
 
@@ -74,8 +74,12 @@ class DashboardController extends Controller
      */
     public function calculateImc($mesure): float
     {
-        $imc = $mesure->weight/($mesure->height*$mesure->height)*10000;
+        $imc = 0.;
         
+        if($mesure !== null && $mesure->height !== 0) {
+            $imc = $mesure->weight/($mesure->height*$mesure->height)*10000;
+        } 
+
         return $imc;
     }
     
@@ -88,12 +92,15 @@ class DashboardController extends Controller
      * @return string
      */
     public function imcIndicator(float $imc) : string
-
     {
-    
+       
         $indicator = "";
 
-        if($imc < 18.5) {
+        if($imc == 0. ) {
+            $indicator = "N/A";
+        }
+
+        if($imc > 0 && $imc < 18.5) {
             $indicator = "Maigreur";
         }
 
