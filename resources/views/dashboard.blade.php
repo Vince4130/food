@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }} de {{ $user->pseudo }} : {{ $mesure->height/100 }} m, {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
+            {{ __('Dashboard') }} de {{ ($user->pseudo != null) ? $user->pseudo : $user->firstname }} : {{ $mesure->height/100 }} m, {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
         </h2>
     </x-slot>
 

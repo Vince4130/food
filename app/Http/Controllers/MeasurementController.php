@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MeasurementController extends Controller
 {
@@ -43,11 +44,15 @@ class MeasurementController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $tomorrow = Carbon::now()->addDay()->format('d/m/Y');
+
         $request->validate([
             'date' => ['bail', 'required', 'unique:measurements,date', 'before:tomorrow'],
             'weight' => ['required', 'decimal:2'],
             'height' => ['required', 'integer'],
             'user_id' => ['required', 'integer'],
+        ],
+            ['date.before' => "La date doit être antérieure au $tomorrow" ,
         ]);
 
         $measurement = Measurement::create([
