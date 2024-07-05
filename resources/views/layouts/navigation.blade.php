@@ -19,31 +19,6 @@
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                         {{ __('Profil') }}
                     </x-nav-link>
-                    
-                    <div class="hidden sm:flex sm:items-center sm:ms-6">
-                        <x-dropdown align="left" width="48">
-                            <x-slot name="trigger">
-                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                    <div>{{ __('Morphologie') }}</div>
-
-                                    <div class="ms-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </button>
-                            </x-slot>
-
-                            <x-slot name="content">   
-                                <x-dropdown-link :href="route('morphologies.create')">
-                                    {{ __('Saisir') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('morphologies.edit', Auth::user()->id)" >
-                                    {{ __('Update') }}
-                                </x-dropdown-link> 
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
 
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <x-dropdown align="left" width="48">
@@ -61,13 +36,28 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('measurements.index')">
-                                    {{ __('Historique') }}
+                                    {{ __('Historique poids') }}
                                 </x-dropdown-link>
 
                                 <x-dropdown-link :href="route('measurements.create')">
-                                    {{ __('Saisir vos mesures') }}
+                                    {{ __('Saisir votre poids') }}
                                 </x-dropdown-link>
                                 
+                                <x-dropdown-link :href="route('morphologies.create')">
+                                    {{ __('Saisir votre morphologie') }}
+                                </x-dropdown-link>
+                                
+                                <x-dropdown-link :href="route('morphologies.edit', Auth::user()->id)" >
+                                    {{ __('Mettre à jour votre morphologie') }}
+                                </x-dropdown-link> 
+
+                                <x-dropdown-link :href="route('activities.create')" >
+                                    {{ __("Saisir votre niveau d'activité physique") }}
+                                </x-dropdown-link>
+                                
+                                <x-dropdown-link :href="route('activities.edit', Auth::user()->id)" >
+                                    {{ __("Mettre à jour votre niveau d'activité physique") }}
+                                </x-dropdown-link> 
                             </x-slot>
                         </x-dropdown>
                     </div>
