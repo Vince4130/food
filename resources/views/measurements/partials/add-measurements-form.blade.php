@@ -19,6 +19,11 @@
             <x-input-label for="date" :value="__('Date')" />
             <x-text-input id="date" class="block mt-1 w-full" type="date" name="date" :value="old('date')" required autofocus autocomplete="date" />
             <x-input-error :messages="$errors->get('date')" class="mt-2" />
+            @if (session('status'))
+                <ul class="text-sm text-red-600 space-y-1 mt-2">
+                    <li>{{ session('status') }}</li>
+                </ul>
+            @endif
         </div>
 
         <!-- Weight -->
@@ -31,8 +36,9 @@
         <!-- Height -->
         <div class="block mt-4">
             <div >
+                @php $userHeight = ($height !== null) ? $height->height : ''; @endphp
                 <x-input-label for="height" :value="__('Taille (cm)')" />
-                <x-text-input id="height" class="block mt-1 w-full" type="number" name="height" :value="old('height', $height->height)" step="1" min="100" required autofocus autocomplete="height" />
+                <x-text-input id="height" class="block mt-1 w-full" type="number" name="height" :value="old('height', $userHeight)" step="1" min="100" required autofocus autocomplete="height" />
                 <x-input-error :messages="$errors->get('height')" class="mt-2" />
             </div>
         </div>

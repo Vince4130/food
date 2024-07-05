@@ -46,25 +46,36 @@ class MeasurementController extends Controller
     {
         $tomorrow = Carbon::now()->addDay()->format('d/m/Y');
 
-        $request->validate([
-            'date' => ['bail', 'required', 'unique:measurements,date', 'before:tomorrow'],
-            'weight' => ['required', 'decimal:2'],
-            'height' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
-        ],
-            ['date.before' => "La date doit être antérieure au $tomorrow" ,
-        ]);
+        $exist = Measurement::where('date', $request->date)->where('user_id', $request->user_id)->count();
+        
+        $user = User::find($request->user_id);
 
-        $measurement = Measurement::create([
-            'date' => $request->date,
-            'weight' => $request->weight,
-            'height' => $request->height,
-            'user_id' => $request->user_id,
-        ]);
+        if($exist === 0) {
+            
+            $request->validate([
+                'date' => ['bail', 'required', 'before:tomorrow'],
+                'weight' => ['required', 'decimal:2'],
+                'height' => ['required', 'integer'],
+                'user_id' => ['required', 'integer'],
+            ],
+                [
+                    'date.before' => "La date doit être antérieure au $tomorrow.",
+                    'weight.decimal' => "Le champs poids doit comporter :decimal décimales.",
+            ]);
 
-        event(new Registered($measurement));
+            $measurement = Measurement::create([
+                'date' => $request->date,
+                'weight' => $request->weight,
+                'height' => $request->height,
+                'user_id' => $request->user_id,
+            ]);
 
-        return redirect(route('measurements.index', absolute: false));
+            event(new Registered($measurement));
+
+            return redirect(route('measurements.index', absolute: false));
+        }
+
+        return back()->withInput()->with('status', 'Mesures déjà saisie pour cette date.');
 
     }
 

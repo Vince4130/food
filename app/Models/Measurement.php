@@ -20,7 +20,7 @@ class Measurement extends Model
      * @param  mixed $user
      * @return Object
      */
-    public static function getUserAllMesure(User $user): Object
+    public static function getUserAllMesure(User $user): ?Object
     {
         $mesures = DB::table('measurements')
             ->select('measurements.id', 'date', 'weight', 'height')
@@ -38,7 +38,7 @@ class Measurement extends Model
      * @param  mixed $user
      * @return Object
      */
-    public static function getUserLastMesure(User $user): Object
+    public static function getUserLastMesure(User $user): ?Object
     {
         $mesure = DB::table('measurements')
             ->select('measurements.id', 'date', 'weight', 'height', 'sexe')
@@ -60,7 +60,7 @@ class Measurement extends Model
      */
     public static function getUserMesuresOfCurrentMonth(User $user, string $firstDay, string $lastDay)
     {
-        $weights = DB::table('measurements')
+        $mesuresOfMonth = DB::table('measurements')
             ->select('date', 'weight', 'height')
             ->join('users', 'users.id', '=', 'measurements.user_id')
             ->where('users.id', $user->id)
@@ -69,7 +69,7 @@ class Measurement extends Model
             ->orderBy('date')
             ->get();
 
-        return $weights;
+        return $mesuresOfMonth;
     }
     
     
