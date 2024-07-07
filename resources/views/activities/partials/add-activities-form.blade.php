@@ -19,12 +19,22 @@
 
         <!-- Physical Activity Level -->
         <div class="mt-4">
+            <x-input-label  for="activity" :value="__('Activity')" />
             <div class="activity mt-4">
                 <label for="sedentary">Sédentaire</label>
                 <input id="sedentary" class="block mt-1" type="radio" name="activity" value="sedentary" {{ old('activity') == 'sedentary' ? 'checked' : '' }} required autofocus autocomplete="activity" />
 
                 <label for="slightly">Légèrement actif</label>
                 <input id="slightly" class="block mt-1" type="radio" name="activity" value="slightly" {{ old('activity') == 'slightly' ? 'checked' : '' }} required autofocus autocomplete="activity" />
+
+                <label for="moderatly">Modérément actif</label>
+                <input id="moderatly" class="block mt-1" type="radio" name="activity" value="moderatly" {{ old('activity') == 'moderatly' ? 'checked' : '' }} required autofocus autocomplete="activity" />
+
+                <label for="very">Très actif</label>
+                <input id="very" class="block mt-1" type="radio" name="activity" value="very" {{ old('activity') == 'very' ? 'checked' : '' }} required autofocus autocomplete="activity" />
+
+                <label for="extremely">Légèrement actif</label>
+                <input id="extremely" class="block mt-1" type="radio" name="activity" value="extremely" {{ old('activity') == 'extremely' ? 'checked' : '' }} required autofocus autocomplete="activity" />
 
             </div>
             <x-input-error :messages="$errors->get('date')" class="mt-2" />
