@@ -1,41 +1,67 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Morphologie enregistrée le ') }} {{ date('d/m/Y', strtotime($morphology->date)) }}
+            {{ __("Niveau d'activité physique enregistrée le ") }} {{  date('d/m/Y', strtotime($activity->date)) }}
         </h2>
-        @if (session('status'))
-            <ul class="text-sm text-red-600 space-y-1 mt-2">
-                <li>{{ session('status') }}</li>
-            </ul>
-         @endif
-         @if (session('statusOk'))
+
+        @if (session('success'))
             <ul class="text-sm text-green-600 space-y-1 mt-2">
-                <li>{{ session('statusOk') }}</li>
+                <li>{{ session('success') }}</li>
             </ul>
+        @else 
+            <p class="mt-1 text-sm text-gray-600">
+                {{ __("Mettre à jour votre niveau d'activité physique.") }}
+            </p>
          @endif
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __("Mettre à jour votre morphologie.") }}
-        </p>
+
     </header>
 
-    <form method="post" action="{{ route('morphologies.update', $morphology->id) }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('activities.update', $activity->id) }}">
         @csrf
-        
-        <input type="hidden" name="date" id="date" value="{{ $morphology->date }}">
-        <input type="hidden" name="morphology_id" id="morphology_id" value="{{ $morphology->id }}">
 
-        <div class="mt-4">
-            <div class="morpho mt-4">
-                <label for="slim">Mince</label>
-                <input id="slim" class="block mt-1" type="radio" name="morpho" value="slim" {{ $morphology->morpho == 'slim' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
+        @php $today = date('Y-m-d') @endphp
+        <input type="hidden" name="date" id="date" value="{{ $activity->date }}">
+        <input type="hidden" name="activity_id" id="activity_id" value="{{ $activity->id }}">
 
-                <label for="normal">Normale</label>
-                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" {{ $morphology->morpho == 'normal' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
+        <!-- Update Physical Activity Level -->
+        <div class="mt-4 activity">
+            <div class="activity__level mt-4">
+                <label for="sedentary">Sédentaire</label>
+                <input id="sedentary" class="block mt-1" type="radio" name="activity" value="sedentary" {{ $activity->activity == 'sedentary' ? 'checked' : '' }} required autofocus autocomplete="activity" />
 
-                <label for="large">Large</label>
-                <input id="large" class="block mt-1" type="radio" name="morpho" value="large" {{ $morphology->morpho == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
+                <label for="slightly">Légèrement actif</label>
+                <input id="slightly" class="block mt-1" type="radio" name="activity" value="slightly" {{ $activity->activity == 'slightly' ? 'checked' : '' }} required autofocus autocomplete="activity" />
+
+                <label for="moderatly">Modérément actif</label>
+                <input id="moderatly" class="block mt-1" type="radio" name="activity" value="moderatly" {{ $activity->activity == 'moderatly' ? 'checked' : '' }} required autofocus autocomplete="activity" />
+
+                <label for="very">Très actif</label>
+                <input id="very" class="block mt-1" type="radio" name="activity" value="very" {{ $activity->activity == 'very' ? 'checked' : '' }} required autofocus autocomplete="activity" />
+
+                <label for="extremely">Extrêmement actif</label>
+                <input id="extremely" class="block mt-1" type="radio" name="activity" value="extremely" {{$activity->activity == 'extremely' ? 'checked' : '' }} required autofocus autocomplete="activity" />
             </div>
-            <x-input-error :messages="$errors->get('morpho')" class="mt-2" />
+            
+            <x-input-error :messages="$errors->get('date')" class="mt-2" />
+            <x-input-error :messages="$errors->get('activity')" class="mt-2" />
+
+            <div class="activity__legend mt-4">
+                <div class="activity__legend--cat activity__legend--sed" title="Pas ou peu d'exercice">
+                    <div>Sédentaire</div>
+                </div>
+                <div class="activity__legend--cat activity__legend--sli" title="Exercice 1 à 3 heures par semaine">
+                    <div>Légèrement actif.ve</div>
+                </div>
+                <div class="activity__legend--cat activity__legend--mod" title="Exercice 3 à 5 heures par semaine">
+                    <div>Modérément actif.ve</div>
+                </div>
+                <div class="activity__legend--cat activity__legend--very" title="Exercice 6 à 7 heures par semaine">
+                    <div>Très actif.ve</div>
+                </div>
+                <div class="activity__legend--cat activity__legend--extr" title="Compétition">
+                    <div>Extrêmement actif.ve</div>
+                </div>
+            </div>
         </div>
 
         <div class="flex items-center justify-end mt-4">
