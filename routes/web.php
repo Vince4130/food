@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/activities')->group(function () {
         Route::get('/create', [ActivityController::class, 'create'])->name('activities.create');
         Route::post('/store', [ActivityController::class, 'store'])->name('activities.store');
-        Route::get('/{activity}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
+        Route::get('/{id}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
         Route::post('/update/{activity}', [ActivityController::class, 'update'])->name('activities.update');
 
         // Route::get('/index', [ActivityController::class, 'index'])->name('activities.index');

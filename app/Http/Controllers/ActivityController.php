@@ -70,13 +70,13 @@ class ActivityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Activity $activity)
+    public function edit(int $userId)
     {
-        // $user = User::find($userId);
+        $user = User::find($userId);
 
-        $myActivity = Activity::find($activity->id);
+        $activity = Activity::find($user->id);
 
-        return view('activities.edit', ['activity' => $myActivity]);
+        return view('activities.edit', compact('activity'));
     }
 
     /**
