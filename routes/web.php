@@ -43,19 +43,14 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/activities')->group(function () {
-        Route::get('/create', function (Request $request) {
-            $user = $request->user();
-            return view('activities.create', compact('user'));
-        })->name('activities.create');
-
-        Route::get('/{id}/edit', function (Request $request) {
-            $user = $request->user();
-            return view('activities.create', compact('user'));
-        })->name('activities.edit');
+        Route::get('/create', [ActivityController::class, 'create'])->name('activities.create');
+        Route::post('/store', [ActivityController::class, 'store'])->name('activities.store');
+        Route::get('/{activity}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
+        Route::post('/update/{activity}', [ActivityController::class, 'update'])->name('activities.update');
 
         // Route::get('/index', [ActivityController::class, 'index'])->name('activities.index');
         // Route::get('/create', [ActivityController::class, 'create'])->name('activities.create');
-        // Route::post('/store', [ActivityController::class, 'store'])->name('activities.store');
+       
         // Route::get('/{id}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
         // Route::post('/update/{morphology}', [ActivityController::class, 'update'])->name('activities.update');
         // Route::delete('/delete/{morphology}', [ActivityController::class, 'destroy'])->name('activities.destroy');
