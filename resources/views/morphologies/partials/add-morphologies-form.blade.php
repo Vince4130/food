@@ -3,9 +3,16 @@
         <h2 class="text-lg font-medium text-gray-900">
             {{ __('Saisir votre morphologie au ') }} {{ date('d/m/Y') }}
         </h2>
-        @if (session('status'))
+
+        @if (session('success'))
+            <ul class="text-sm text-green-600 space-y-1 mt-2">
+                <li>{{ session('success') }}</li>
+            </ul>
+         @endif
+
+        @if (session('failure'))
             <ul class="text-sm text-red-600 space-y-1 mt-2">
-                <li>{{ session('status') }}</li>
+                <li>{{ session('failure') }}</li>
             </ul>
          @endif
         <!-- <p class="mt-1 text-sm text-gray-600">

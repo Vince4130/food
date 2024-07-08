@@ -33,7 +33,7 @@
                 <label for="very">Très actif</label>
                 <input id="very" class="block mt-1" type="radio" name="activity" value="very" {{ old('activity') == 'very' ? 'checked' : '' }} required autofocus autocomplete="activity" />
 
-                <label for="extremely">Légèrement actif</label>
+                <label for="extremely">Etrêmement actif</label>
                 <input id="extremely" class="block mt-1" type="radio" name="activity" value="extremely" {{ old('activity') == 'extremely' ? 'checked' : '' }} required autofocus autocomplete="activity" />
 
             </div>
