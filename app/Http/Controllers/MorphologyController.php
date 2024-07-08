@@ -99,7 +99,7 @@ class MorphologyController extends Controller
         
         $morphology->save();
 
-        return redirect(route('morphologies.edit', $morphology->user_id))->with('success', 'Morphologie mofifiée avec succès.');;
+        return redirect(route('morphologies.edit', $morphology->user_id))->with('success', 'Morphologie mofifiée avec succès.');
     }
 
     /**
