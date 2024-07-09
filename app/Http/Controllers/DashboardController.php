@@ -18,14 +18,10 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        $birthdate = $user->birth;
-
         $firstDay   = Carbon::now()->startOfMonth()->format('Y-m-d'); //format('Y-m-01'); 
         $lastDay    = Carbon::now()->endOfMonth()->format('Y-m-d');
-        $currentDay = Carbon::now()->format('Y-m-d');
 
-        $age = Carbon::createFromDate($birthdate)->diffInYears($currentDay);
-        $age = (int)$age;
+        $age = $user->calculateAge();
 
         $currentMonth = $this->frenchMonth($firstDay);
 

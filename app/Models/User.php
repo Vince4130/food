@@ -6,11 +6,23 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function calculateAge() 
+    {
+        $currentDay = Carbon::now()->format('Y-m-d');
+
+        $age = Carbon::createFromDate($this->birth)->diffInYears($currentDay);
+        $age = (int)$age;
+
+        return $age;
+    }
+    
     /**
      * The attributes that are mass assignable.
      *
