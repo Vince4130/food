@@ -26,9 +26,9 @@
         <input type="hidden" name="date" id="date" value="{{ $today }}">
 
         <!-- Physical Activity Level -->
-        <div class="mt-4 activity"> <!-- style="justify-content: space-around;" -->
-            <div class="activity__level mt-4"> <!--  style="flex-direction: column; width: 200px; row-gap: 5px;" -->
-                <div class="activity__level--name"> <!-- style="display: flex; justify-content: space-between" -->
+        <div class="mt-4 activity">
+            <div class="activity__level mt-4">
+                <div class="activity__level--name">
                     <p><label for="sedentary">Sédentaire</label></p>
                     <p><input id="sedentary" class="block mt-1" type="radio" name="activity" value="sedentary" {{ old('activity') == 'sedentary' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
                 </div>
