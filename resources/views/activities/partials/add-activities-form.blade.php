@@ -26,25 +26,25 @@
         <input type="hidden" name="date" id="date" value="{{ $today }}">
 
         <!-- Physical Activity Level -->
-        <div class="mt-4 activity" style="justify-content: space-around;">
-            <div class="activity__level mt-4" style="flex-direction: column; width: 200px; row-gap: 5px;">
-                <div style="display: flex; justify-content: space-between">
+        <div class="mt-4 activity"> <!-- style="justify-content: space-around;" -->
+            <div class="activity__level mt-4"> <!--  style="flex-direction: column; width: 200px; row-gap: 5px;" -->
+                <div class="activity__level--name"> <!-- style="display: flex; justify-content: space-between" -->
                     <p><label for="sedentary">Sédentaire</label></p>
                     <p><input id="sedentary" class="block mt-1" type="radio" name="activity" value="sedentary" {{ old('activity') == 'sedentary' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
                 </div>
-                <div style="display: flex; justify-content: space-between">
+                <div class="activity__level--name">
                     <p><label for="slightly">Légèrement actif</label></p>
                     <p><input id="slightly" class="block mt-1" type="radio" name="activity" value="slightly" {{ old('activity') == 'slightly' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
                 </div>
-                <div style="display: flex; justify-content: space-between">
+                <div class="activity__level--name">
                     <p><label for="moderatly">Modérément actif</label></p>
                     <p><input id="moderatly" class="block mt-1" type="radio" name="activity" value="moderatly" {{ old('activity') == 'moderatly' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
                 </div>
-                <div style="display: flex; justify-content: space-between">
+                <div class="activity__level--name">
                     <p><label for="very">Très actif</label></p>
                     <p><input id="very" class="block mt-1" type="radio" name="activity" value="very" {{ old('activity') == 'very' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
                 </div>
-                <div style="display: flex; justify-content: space-between">
+                <div class="activity__level--name">
                     <p><label for="extremely">Extrêmement actif</label></p>
                     <p><input id="extremely" class="block mt-1" type="radio" name="activity" value="extremely" {{ old('activity') == 'extremely' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
                 </div>

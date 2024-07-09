@@ -24,22 +24,28 @@
         <input type="hidden" name="activity_id" id="activity_id" value="{{ $activity->id }}">
 
         <!-- Update Physical Activity Level -->
-        <div class="mt-4 activity">
-            <div class="activity__level mt-4">
-                <label for="sedentary">Sédentaire</label>
-                <input id="sedentary" class="block mt-1" type="radio" name="activity" value="sedentary" {{ $activity->activity == 'sedentary' ? 'checked' : '' }} required autofocus autocomplete="activity" />
-
-                <label for="slightly">Légèrement actif</label>
-                <input id="slightly" class="block mt-1" type="radio" name="activity" value="slightly" {{ $activity->activity == 'slightly' ? 'checked' : '' }} required autofocus autocomplete="activity" />
-
-                <label for="moderatly">Modérément actif</label>
-                <input id="moderatly" class="block mt-1" type="radio" name="activity" value="moderatly" {{ $activity->activity == 'moderatly' ? 'checked' : '' }} required autofocus autocomplete="activity" />
-
-                <label for="very">Très actif</label>
-                <input id="very" class="block mt-1" type="radio" name="activity" value="very" {{ $activity->activity == 'very' ? 'checked' : '' }} required autofocus autocomplete="activity" />
-
-                <label for="extremely">Extrêmement actif</label>
-                <input id="extremely" class="block mt-1" type="radio" name="activity" value="extremely" {{$activity->activity == 'extremely' ? 'checked' : '' }} required autofocus autocomplete="activity" />
+        <div class="mt-4 activity"> <!-- style="justify-content: space-around;" -->
+            <div class="activity__level mt-4"> <!--  style="flex-direction: column; width: 200px; row-gap: 5px;" -->
+                <div class="activity__level--name"> <!-- style="display: flex; justify-content: space-between" -->
+                    <p><label for="sedentary">Sédentaire</label></p>
+                    <p><input id="sedentary" class="block mt-1" type="radio" name="activity" value="sedentary" {{ $activity->activity == 'sedentary' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
+                </div>
+                <div class="activity__level--name">
+                    <p><label for="slightly">Légèrement actif</label></p>
+                    <p><input id="slightly" class="block mt-1" type="radio" name="activity" value="slightly" {{ $activity->activity == 'slightly' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
+                </div>
+                <div class="activity__level--name">
+                    <p><label for="moderatly">Modérément actif</label></p>
+                    <p><input id="moderatly" class="block mt-1" type="radio" name="activity" value="moderatly" {{ $activity->activity == 'moderatly' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
+                </div>
+                <div class="activity__level--name">
+                    <p><label for="very">Très actif</label></p>
+                    <p><input id="very" class="block mt-1" type="radio" name="activity" value="very" {{ $activity->activity == 'very' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
+                </div>
+                <div class="activity__level--name">
+                    <p><label for="extremely">Extrêmement actif</label></p>
+                    <p><input id="extremely" class="block mt-1" type="radio" name="activity" value="extremely" {{ $activity->activity == 'extremely' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
+                </div>
             </div>
             
             <x-input-error :messages="$errors->get('date')" class="mt-2" />

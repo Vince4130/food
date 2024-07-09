@@ -168,13 +168,23 @@ $backg6: #f44242;
 
 .activity {
     display: flex;
+    justify-content: space-around;
     column-gap: 20px;
     width: 1170px;
 
     &__level {
+        // display: flex;
+        // flex-direction: row;
+        // column-gap: 20px;
         display: flex;
-        flex-direction: row;
-        column-gap: 20px;
+        flex-direction: column;
+        width: 200px; 
+        row-gap: 5px;
+
+        &--name {
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
     &__legend {
@@ -182,7 +192,7 @@ $backg6: #f44242;
         flex-direction: column;
         align-items: center;
         row-gap: 5px;
-        width: 500px;
+        // width: 500px;
         height: 250px;
         font-size: smaller;
         cursor: default;
