@@ -62,10 +62,10 @@ class MorphologyController extends Controller
             
             event(new Registered($morphology));
             
-            return redirect(route('morphologies.edit', $user->id))->with('status', 'Morphologie enregistrée.'); 
+            return back()->with('success', 'Morphologie enregistrée.'); 
         } 
 
-        return back()->with('status', 'Morphologie déjà saisie pour cette date.'); 
+        return back()->with('failure', 'Morphologie déjà saisie pour cette date.'); 
     }
 
     /**
@@ -99,7 +99,7 @@ class MorphologyController extends Controller
         
         $morphology->save();
 
-        return redirect(route('morphologies.edit', $morphology->user_id))->with('statusOk', 'Morphologie mofifiée avec succès.');;
+        return redirect(route('morphologies.edit', $morphology->user_id))->with('success', 'Morphologie mofifiée avec succès.');
     }
 
     /**

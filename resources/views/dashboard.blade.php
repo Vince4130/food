@@ -33,23 +33,23 @@
                     </div>
 
                     <div class="imc__legend">
-                            <div class="imc__legend--cat imc__legend--maigre">
-                                <div title="[imc<18.5]">Maigreur</div>
+                            <div class="imc__legend--cat imc__legend--maigre"  title="[imc<18.5]">
+                                <div>Maigreur</div>
                             </div>
-                            <div class="imc__legend--cat imc__legend--normale">
-                                <div title="[18.5<imc<25]">Corpulence normale</div>
+                            <div class="imc__legend--cat imc__legend--normale" title="[18.5<imc<25]">
+                                <div>Corpulence normale</div>
                             </div>
-                            <div class="imc__legend--cat imc__legend--surpoids">
-                                <div title="[25<imc<30]">Surpoids</div>
+                            <div class="imc__legend--cat imc__legend--surpoids" title="[25<imc<30]">
+                                <div>Surpoids</div>
                             </div>
-                            <div class="imc__legend--cat imc__legend--obesitemod">
-                                <div title="[30<imc<35]">Obésité modérée</div>
+                            <div class="imc__legend--cat imc__legend--obesitemod" title="[30<imc<35]">
+                                <div>Obésité modérée</div>
                             </div>
                             <div class="imc__legend--cat imc__legend--obesitesev">
                                 <div title="[35<imc<40]">Obésisté sévère</div>
                             </div>
-                            <div class="imc__legend--cat imc__legend--obesitemor">
-                                <div title="[imc>40]">Obésité morbide</div>
+                            <div class="imc__legend--cat imc__legend--obesitemor"  title="[imc>40]">
+                                <div>Obésité morbide</div>
                             </div>
                     </div>
                     <!-- <div>

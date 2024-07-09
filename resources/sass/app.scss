@@ -14,6 +14,13 @@
 
 $legend-opacity: 0.75;
 
+$backg1: #a3f5ff;
+$backg2: #54ce54;
+$backg3: #ffff00;
+$backg4: #ffb800;
+$backg5: #ff6800;
+$backg6: #f44242;
+
 .title {
     text-align: center;
 }
@@ -135,30 +142,95 @@ $legend-opacity: 0.75;
     }
 
     &--maigre {
-        background-color: #a3f5ff;
+        background-color: $backg1;
     }
 
     &--normale {
-        background-color: #54ce54;
+        background-color: $backg2;
     }
 
     &--surpoids {
-        background-color: #ffff00;
+        background-color: $backg3;
     }
 
     &--obesitemod {
-        background-color: #ffb800;
+        background-color: $backg4;
     }
 
     &--obesitesev {
-        background-color : #ff6800;
+        background-color : $backg5;
     }
 
     &--obesitemor {
-        background-color : #f44242 ;
+        background-color : $backg6;
     }
 }
 
+.activity {
+    display: flex;
+    justify-content: space-around;
+    column-gap: 20px;
+    width: 1170px;
+
+    &__level {
+        // display: flex;
+        // flex-direction: row;
+        // column-gap: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 200px; 
+        row-gap: 5px;
+
+        &--name {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &__legend {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 5px;
+        // width: 500px;
+        height: 250px;
+        font-size: smaller;
+        cursor: default;
+
+        &--cat {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 40px;
+            opacity: $legend-opacity;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &--sed {
+            background-color : $backg6;
+        }
+
+        &--sli {
+            background-color: $backg5;
+        }
+
+        &--mod {
+            background-color: $backg4;
+        }
+
+        &--very {
+            background-color: $backg3;
+        }
+
+        &--extr {
+            background-color: $backg2;
+        }
+    }
+}
 
 .anchor {
     display: flex;

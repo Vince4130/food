@@ -3,9 +3,16 @@
         <h2 class="text-lg font-medium text-gray-900">
             {{ __('Saisir votre morphologie au ') }} {{ date('d/m/Y') }}
         </h2>
-        @if (session('status'))
+
+        @if (session('success'))
+            <ul class="text-sm text-green-600 space-y-1 mt-2">
+                <li>{{ session('success') }}</li>
+            </ul>
+         @endif
+
+        @if (session('failure'))
             <ul class="text-sm text-red-600 space-y-1 mt-2">
-                <li>{{ session('status') }}</li>
+                <li>{{ session('failure') }}</li>
             </ul>
          @endif
         <!-- <p class="mt-1 text-sm text-gray-600">
@@ -27,7 +34,7 @@
                 <input id="slim" class="block mt-1" type="radio" name="morpho" value="slim" {{ old('morpho') == 'slim' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
 
                 <label for="normal">Normale</label>
-                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" {{ old('morpho') == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
+                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" {{ old('morpho') == 'normal' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
 
                 <label for="large">Large</label>
                 <input id="large" class="block mt-1" type="radio" name="morpho" value="large" {{ old('morpho') == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
