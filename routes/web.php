@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MeasurementController;
 use App\Http\Controllers\MorphologyController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\TargetController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -54,6 +55,10 @@ Route::middleware('auth')->group(function () {
         // Route::get('/{id}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
         // Route::post('/update/{morphology}', [ActivityController::class, 'update'])->name('activities.update');
         // Route::delete('/delete/{morphology}', [ActivityController::class, 'destroy'])->name('activities.destroy');
+    });
+
+    Route::prefix('/targets')->group(function () {
+        Route::get('/index', [TargetController::class, 'index'])->name('targets.index');
     });
     
 });

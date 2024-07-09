@@ -61,6 +61,10 @@
                             </x-slot>
                         </x-dropdown>
                     </div>
+
+                    <x-nav-link :href="route('targets.index')">
+                        {{ __('Target') }}
+                    </x-nav-link>
                     
                 </div>
             </div>
