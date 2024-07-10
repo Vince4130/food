@@ -27,7 +27,7 @@ class TargetController extends Controller
         $gender = $user->sexe;
         
         $metabolism  = $this->mifflinStJeorMetabolim($mesures, $age,  $gender);
-        $dailyEnergy = $metabolism*$coeffActivity;
+        $dailyEnergy = round($metabolism*$coeffActivity, 2);
         
         return view('targets.index', ['user' => $user, 'mesures' => $mesures, 'activity' => $myActivity, 'metabolism' => $metabolism, 'age' => $age, 'gender' => $gender, 'dailyEnergy' => $dailyEnergy]);
     }
@@ -91,7 +91,7 @@ class TargetController extends Controller
      */
     public function mifflinStJeorMetabolim($mesures, int $age, string $gender): float
     {
-        $coeff = ($gender == 'f') ? 5 : -161;
+        $coeff = ($gender == 'h') ? 5 : -161;
        
         $mb = (10*$mesures->weight) + (6.25*$mesures->height) - (5*$age) + $coeff;
         
