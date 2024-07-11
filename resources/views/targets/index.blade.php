@@ -13,16 +13,18 @@
                 </div>
                 <div class="summary">
                     <div class="mesures">   
-                        <x-div-border class="mesures__detail">Poids : {{ $mesures->weight }} Kg</x-div-border>
-                        <x-div-border class="mesures__detail">Taille : {{ $mesures->height }} cm</x-div-border>
-                        <x-div-border class="mesures__detail">Age : {{ $age }} ans</x-div-border>
-                        <x-div-border class="mesures__detail">Genre : {{ ($gender == 'h') ? 'masculin' : 'féminin' }}</x-div-border>
-                        <x-div-border class="mesures__detail mesures__detail--activity">Niveau d'activité physique : {{ $activity }}</x-div-border>
-                        <x-div-border class="mesures__detail mesures__detail--energy">Dépenses énergétiques journalière : {{ $dailyEnergy }} Kcal/jour</x-div-border>
+                        <x-div-border class="mesures__detail"><span class="mesures__detail--legend">Poids :</span> {{ $mesures->weight }} Kg</x-div-border>
+                        <x-div-border class="mesures__detail"><span class="mesures__detail--legend">Taille :</span>{{ $mesures->height }} cm</x-div-border>
+                        <x-div-border class="mesures__detail"><span class="mesures__detail--legend">Age :</span>{{ $age }} ans</x-div-border>
+                        <x-div-border class="mesures__detail"><span class="mesures__detail--legend">Genre :</span> {{ ($gender == 'h') ? 'masculin' : 'féminin' }}</x-div-border>
+                        <x-div-border class="mesures__detail mesures__detail--activity"><span class="mesures__detail--legend">Niveau d'activité physique : </span>{{ $activity }}</x-div-border>
+                        <x-div-border class="mesures__detail mesures__detail--energy"><span class="mesures__detail--legend">Dépenses énergétiques journalière : </span>{{ $dailyEnergy }} Kcal/jour</x-div-border>
                         <x-div-border class="mesures__detail mesures__detail--metabolism">
-                            Métabolisme de base selon la formule de Mifflin St Jeor : {{ $metabolism }} Kcal/jour
-                            <br>                            
-                            (10 * Poids) + (6.25 * Taille) - (5 * Âge) + coeff (coeff = -161 pour une femme et +5 pour un homme)
+                            <div class="metabolism">
+                                <span><span class="mesures__detail--legend">Métabolisme de base selon la formule de Mifflin St Jeor : </span>{{ $metabolism }} Kcal/jour</span>
+                                <!-- <br> -->
+                                <span>(10 * Poids) + (6.25 * Taille) - (5 * Âge) + coeff (coeff = -161 pour une femme et +5 pour un homme)</span>
+                            </div>
                         </x-div-border>
                     </div>
                 </div>
