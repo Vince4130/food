@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    <form method="POST" action="{{ route('measurements.store') }}">
+    <form method="POST" action="{{ route('measurements.store') }}" class="mt-6 space-y-6">
         @csrf
 
         <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
@@ -43,8 +43,8 @@
             </div>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ms-3">
+        <div class="flex items-center gap-4"> <!-- flex items-center justify-end mt-4 -->
+            <x-primary-button> <!--  class="ms-3" -->
                 {{ __('Submit') }}
             </x-primary-button>
         </div>
