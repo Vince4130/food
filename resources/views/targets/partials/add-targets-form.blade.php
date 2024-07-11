@@ -5,7 +5,7 @@
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Saisir un poids et une date cibles.") }}
+            {{ __("Saisir un poids cible et des dates.") }}
         </p>
 
         @if (session('success'))

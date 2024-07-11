@@ -284,7 +284,7 @@ $backg6: #f44242;
 .mesures {
     display: grid;
     grid-template-columns: 250px 250px 250px 250px;
-    grid-template-rows: 50px 50px 75px;
+    grid-template-rows: 50px 75px 75px;
     grid-gap: 10px;
     padding: 10px;
 
@@ -313,7 +313,7 @@ $backg6: #f44242;
     } 
 } 
 
-.metabolism {
+.metabolism, .dailynrj {
     display: flex;
     flex-direction: column;
 }

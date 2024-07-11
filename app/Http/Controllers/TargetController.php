@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Measurement;
 use App\Models\Target;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use Carbon\Carbon;
 
 class TargetController extends Controller
 {
@@ -35,9 +39,11 @@ class TargetController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user = $request->user();
+
+        return view('targets.create', compact('user'));
     }
 
     /**
@@ -45,7 +51,41 @@ class TargetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $today = Carbon::now()->format('d/m/Y');
+
+        $user = User::find($request->user_id);
+
+        $exist = Measurement::where('date', $request->date)->where('user_id', $request->user_id)->count();
+        
+        $user = User::find($request->user_id);
+
+        if($exist === 0) {
+            
+            $request->validate([
+                'date' => ['bail', 'required', 'before:tomorrow'],
+                'weight' => ['required', 'decimal:2'],
+                'height' => ['required', 'integer'],
+                'user_id' => ['required', 'integer'],
+            ],
+                [
+                    'date.before' => "La date doit être antérieure au $today.",
+                    'weight.decimal' => "Le champs poids doit comporter :decimal décimales.",
+            ]);
+
+            $measurement = Measurement::create([
+                'date' => $request->date,
+                'weight' => $request->weight,
+                'height' => $request->height,
+                'user_id' => $request->user_id,
+            ]);
+
+            event(new Registered($measurement));
+
+            return redirect(route('measurements.index', absolute: false));
+        }
+
+        return back()->withInput()->with('status', 'Mesures déjà saisie pour cette date.');
+
     }
 
     /**

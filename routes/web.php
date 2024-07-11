@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('/targets')->group(function () {
         Route::get('/index', [TargetController::class, 'index'])->name('targets.index');
+        Route::get('/create', [TargetController::class, 'create'])->name('targets.create');
+        Route::post('/store', [TargetController::class, 'store'])->name('targets.store');
     });
     
 });
