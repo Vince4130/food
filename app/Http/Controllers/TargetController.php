@@ -22,10 +22,11 @@ class TargetController extends Controller
 
         $mesures  = Measurement::getUserLastMesure($user);
         $activity = Activity::getUserActivity($user);
+        $target   = Target::getLastTarget($user);
+        $targets  = Target::getAllTargets($user);
 
-        $myActivity = $this->getActivity($activity->activity);
-
-        $coeffActivity = $this->getActivityCoeff($activity->activity);
+        $myActivity    = ($activity !== null) ? $this->getActivity($activity->activity) : "";
+        $coeffActivity = ($activity !== null) ? $this->getActivityCoeff($activity->activity) : 0;
         
         $age    = $user->calculateAge();
         $gender = $user->sexe;
@@ -33,7 +34,17 @@ class TargetController extends Controller
         $metabolism  = $this->mifflinStJeorMetabolim($mesures, $age,  $gender);
         $dailyEnergy = round($metabolism*$coeffActivity, 2);
         
-        return view('targets.index', ['user' => $user, 'mesures' => $mesures, 'activity' => $myActivity, 'metabolism' => $metabolism, 'age' => $age, 'gender' => $gender, 'dailyEnergy' => $dailyEnergy]);
+        return view('targets.index', [
+            'user' => $user,
+            'mesures' => $mesures,
+            'activity' => $myActivity,
+            'targets' => $targets,
+            'target' => $target,
+            'metabolism' => $metabolism,
+            'age' => $age,
+            'gender' => $gender,
+            'dailyEnergy' => $dailyEnergy
+        ]);
     }
 
     /**
@@ -52,39 +63,48 @@ class TargetController extends Controller
     public function store(Request $request)
     {
         $today = Carbon::now()->format('d/m/Y');
+        $minPeriod = Carbon::parse($request->startDate)->addWeek()->subDay()->format('Y-m-d');
 
         $user = User::find($request->user_id);
 
-        $exist = Measurement::where('date', $request->date)->where('user_id', $request->user_id)->count();
+        $existStart = Target::whereBetween('startDate', [$request->startDate, $request->endDate])->where('user_id', $request->user_id)->count();
+        $existEnd   = Target::whereBetween('endDate', [$request->startDate, $request->endDate])->where('user_id', $request->user_id)->count();
         
-        $user = User::find($request->user_id);
+        $targetDates = Target::getLastTarget($user);
 
-        if($exist === 0) {
+        $existTargetDates = Target::existPeriodTarget($user, $request->startDate, $request->endDate);
+
+        $targetStart = ($existTargetDates !== null) ? Carbon::create($existTargetDates->startDate)->format('d/m/Y') : "";
+        $targetEnd   = ($existTargetDates !== null) ? Carbon::create($existTargetDates->endDate)->format('d/m/Y') : "";
+    
+        if(!$existTargetDates) {
             
             $request->validate([
-                'date' => ['bail', 'required', 'before:tomorrow'],
-                'weight' => ['required', 'decimal:2'],
-                'height' => ['required', 'integer'],
+                'weight' => ['bail', 'required', 'different:0', 'decimal:2'],
+                'startDate' => ['bail', 'required', 'after:yesterday'],
+                'endDate' => ['bail', 'required', "after:$minPeriod"],
                 'user_id' => ['required', 'integer'],
             ],
                 [
-                    'date.before' => "La date doit être antérieure au $today.",
+                    'startDate.after' => "La date de début doit être postérieure ou égale au $today.",
+                    'endDate.after'   => "La date de fin doit être au moins une semaine après la date de début.",
                     'weight.decimal' => "Le champs poids doit comporter :decimal décimales.",
             ]);
 
-            $measurement = Measurement::create([
-                'date' => $request->date,
+            $target = Target::create([
                 'weight' => $request->weight,
-                'height' => $request->height,
+                'startDate' => $request->startDate,
+                'endDate' => $request->endDate,
                 'user_id' => $request->user_id,
             ]);
 
-            event(new Registered($measurement));
+            event(new Registered($target));
 
-            return redirect(route('measurements.index', absolute: false));
+            return back()->with('success', "Objectif enregistré");
+            // redirect(route('targets.index', absolute: false));
         }
 
-        return back()->withInput()->with('status', 'Mesures déjà saisie pour cette date.');
+        return back()->withInput()->with('period', "Objectif déjà enregistré pour la période du $targetStart au $targetEnd.");
 
     }
 
@@ -101,15 +121,46 @@ class TargetController extends Controller
      */
     public function edit(Target $target)
     {
-        //
+        return view('targets.edit', ['target' => $target]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Target $target)
+    public function update(Request $request)
     {
-        //
+        $today = Carbon::now()->format('d/m/Y');
+        $minPeriod = Carbon::create($request->startDate)->addWeek()->subDay()->format('Y-m-d');
+
+        $target = Target::find($request->target_id);
+        $user   = User::find($target->user_id);
+        
+        $request->validate([
+            'weight' => ['bail', 'required', 'different:0', 'decimal:2'],
+            'startDate' => ['bail', 'required', 'after:yesterday'],
+            'endDate' => ['bail', 'required', "after:$minPeriod"],
+            'user_id' => ['required', 'integer'],
+        ],
+            [
+                'startDate.after' => "La date de début doit être postérieure ou égale au $today.",
+                'endDate.after'   => "La date de fin doit être au moins une semaine après la date de début.",
+                'weight.decimal' => "Le champs poids doit comporter :decimal décimales.",
+        ]);
+
+        $target = Target::where('id', $target->id)
+                        ->where('user_id', $user->id)
+                        ->update(['startDate' => $request->startDate, 'endDate' => $request->endDate, 'weight' => $request->weight]);
+        if ($target) {  
+            event(new Registered($target));
+            return back()->with('success', "Objectif mis à jour");
+            // redirect(route('targets.index', absolute: false));
+        } else {
+            return back()->withInput()->with('period', "Objectif déjà enregistré pour la période du .");
+        }
+
+        
+
+        
     }
 
     /**
@@ -132,13 +183,23 @@ class TargetController extends Controller
     public function mifflinStJeorMetabolim($mesures, int $age, string $gender): float
     {
         $coeff = ($gender == 'h') ? 5 : -161;
+
+        $mb = 0.;
        
-        $mb = (10*$mesures->weight) + (6.25*$mesures->height) - (5*$age) + $coeff;
-        
+        if($mesures) {
+            $mb = (10*$mesures->weight) + (6.25*$mesures->height) - (5*$age) + $coeff;
+        }
+            
         return $mb;
     }
 
-
+    
+    /**
+     * getActivityCoeff
+     *
+     * @param  mixed $activity
+     * @return float
+     */
     public function getActivityCoeff(string $activity): float
     {
         $coeff = 0.;
@@ -168,7 +229,13 @@ class TargetController extends Controller
 
         return $coeff;
     }
-
+    
+    /**
+     * getActivity
+     *
+     * @param  mixed $activity
+     * @return string
+     */
     public function getActivity(string $activity): string
     {
         $act = "";
