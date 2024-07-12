@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    <form method="POST" action="{{ route('measurements.update', $measurement->id) }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('measurements.update', $measurement->id) }}" class="mt-6 space-y-6">
         @csrf
 
         <input type="hidden" name="measurement_id" id="measurement_id" value="{{ $measurement->id }}">
