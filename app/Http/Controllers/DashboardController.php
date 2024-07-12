@@ -31,7 +31,12 @@ class DashboardController extends Controller
     
         $morpho = Morphology::getUserMorphology($user);
 
-        $morphoCoefficient = $this->getCoeffMorpho($morpho->morpho);
+        if($morpho !== null) {
+            $morphoCoefficient = $this->getCoeffMorpho($morpho->morpho);
+        } else {
+            $morphoCoefficient = 0.;
+        }
+        
             
         $imc = $this->calculateImc($mesure);
 
@@ -212,7 +217,7 @@ class DashboardController extends Controller
      */
     public function getCoeffMorpho(string $morpho): float
     {
-        $coeff = 0;
+        $coeff = 0.;
 
         switch($morpho) {
             case 'slim' :
