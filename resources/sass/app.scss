@@ -294,16 +294,18 @@ $backg6: #f44242;
         align-items: center;
 
         &--activity {
-            grid-column: 1/3;   
+            grid-column: 1/3; 
+            grid-row: 3/3; 
         }
 
         &--energy {
             grid-column: 3/5;
-            grid-row: 2/3;
+            grid-row: 3/3;
         }
 
         &--metabolism {
             grid-column: 1/5;
+            grid-row: 2/3;
         }
         
         &--legend {
