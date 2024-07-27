@@ -111,7 +111,7 @@
                     <input type="hidden" name="morphoCoefficient" id="morphoCoefficient" value="{{ $morphoCoefficient }}">
                     <div class="dashboard__idealweight--creff" id="creff">
                         <p>
-                            {{ __("Selon la formule de Creff ")}} (morphologie : {{ ($morpho->morpho == 'normal') ? 'normale' : (($morpho->morpho == 'slim') ? 'mince' : 'large') }})
+                            {{ __("Selon la formule de Creff ")}} (morphologie : @if($morpho !== null) {{ ($morpho->morpho == 'normal') ? 'normale' : (($morpho->morpho == 'slim') ? 'mince' : 'large') }} @else non renseignée) @endif
                         </p>
                     </div>
                 </div>
