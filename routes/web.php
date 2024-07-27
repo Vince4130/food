@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [TargetController::class, 'create'])->name('targets.create');
         Route::post('/store', [TargetController::class, 'store'])->name('targets.store');
         Route::post('/update', [TargetController::class, 'update'])->name('targets.update');
+        Route::get('/delete/{target}', [TargetController::class, 'destroy'])->name('targets.destroy');
     });
     
 });

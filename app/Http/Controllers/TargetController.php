@@ -157,10 +157,7 @@ class TargetController extends Controller
         } else {
             return back()->withInput()->with('period', "Objectif déjà enregistré pour la période du .");
         }
-
-        
-
-        
+                
     }
 
     /**
@@ -168,7 +165,9 @@ class TargetController extends Controller
      */
     public function destroy(Target $target)
     {
-        //
+        Target::destroy($target->id);
+
+        return redirect(route('targets.index'));
     }
     
     /**

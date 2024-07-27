@@ -37,7 +37,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="navbar-brand" href="">
+                                            <a class="navbar-brand" href="{{ route('targets.destroy', $target->id) }}">
                                                 <i class="fa-regular fa-trash-can fa-lg"></i>
                                             </a>
                                         </td>
