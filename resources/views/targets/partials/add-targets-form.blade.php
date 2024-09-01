@@ -34,7 +34,7 @@
             <div class="target mt-4">
                 
                 <x-input-label for="weight" class="form-label" :value="__('Weight')" />
-                <x-text-input type="range" class="form-range" min="-50" max="50" id="weight" name="weight" :value="(old('weight')) ? old('weight') : 0" step=".05" />
+                <input type="range" class="form-range" min="-50" max="50" id="weight" name="weight" :value="(old('weight')) ? old('weight') : 0" step=".05" />
                 <x-input-error :messages="$errors->get('weight')" class="mt-2" />
                 <div class="range">
                     <div class="range__weight">
