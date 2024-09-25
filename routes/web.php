@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MeasurementController;
 use App\Http\Controllers\MorphologyController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\TargetController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -47,13 +48,16 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [ActivityController::class, 'store'])->name('activities.store');
         Route::get('/{id}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
         Route::post('/update/{activity}', [ActivityController::class, 'update'])->name('activities.update');
+    });
 
-        // Route::get('/index', [ActivityController::class, 'index'])->name('activities.index');
-        // Route::get('/create', [ActivityController::class, 'create'])->name('activities.create');
-       
-        // Route::get('/{id}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
-        // Route::post('/update/{morphology}', [ActivityController::class, 'update'])->name('activities.update');
-        // Route::delete('/delete/{morphology}', [ActivityController::class, 'destroy'])->name('activities.destroy');
+    Route::prefix('/targets')->group(function () {
+        Route::get('/index', [TargetController::class, 'index'])->name('targets.index');
+        Route::get('/show', [TargetController::class, 'show'])->name('targets.show');
+        Route::match(['get', 'post'], '/{target}/edit', [TargetController::class, 'edit'])->name('targets.edit');
+        Route::get('/create', [TargetController::class, 'create'])->name('targets.create');
+        Route::post('/store', [TargetController::class, 'store'])->name('targets.store');
+        Route::post('/update', [TargetController::class, 'update'])->name('targets.update');
+        Route::get('/delete/{target}', [TargetController::class, 'destroy'])->name('targets.destroy');
     });
     
 });

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }} de {{ ($user->pseudo != null) ? $user->pseudo : $user->firstname }} : {{ ($mesure !== null) ? $mesure->height/100 : '' }}  {{ ($mesure !== null) ? ' m,' : '' }} {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
+            {{ __('Dashboard') }} : {{ ($user->pseudo != null) ? $user->pseudo : $user->firstname }} {{ ($mesure !== null) ? $mesure->height/100 : '' }}  {{ ($mesure !== null) ? ' m,' : '' }} {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
         </h2>
     </x-slot>
 
@@ -65,6 +65,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{ __("Courbe de poids du mois de ") }} {{ $currentMonth }}
+                    <div class="months">
+                        <a class="months__links" href=""><i class="fa-regular fa-square-caret-left fa-xl"></i></a>
+                        <a class="months__links" href=""><i class="fa-regular fa-square-caret-right fa-xl"></i></a>
+                    </div>
                 </div>
                 <div class="dashboard__data data__weight">
                     <input type="hidden" name="weights" id="weights" value="{{ json_encode($weightsCurrentMonth) }}">   
@@ -111,7 +115,7 @@
                     <input type="hidden" name="morphoCoefficient" id="morphoCoefficient" value="{{ $morphoCoefficient }}">
                     <div class="dashboard__idealweight--creff" id="creff">
                         <p>
-                            {{ __("Selon la formule de Creff ")}} (morphologie : {{ ($morpho->morpho == 'normal') ? 'normale' : (($morpho->morpho == 'slim') ? 'mince' : 'large') }})
+                            {{ __("Selon la formule de Creff ")}} (morphologie : @if($morpho !== null) {{ ($morpho->morpho == 'normal') ? 'normale)' : (($morpho->morpho == 'slim') ? 'mince)' : 'large)') }} @else non renseignée) @endif
                         </p>
                     </div>
                 </div>
@@ -357,20 +361,20 @@
         });
     </script>
     <script>
-        const ctx   = document.getElementById('weightsChart');
+        const ctx = document.getElementById('weightsChart');
         const ctxImc = document.getElementById('imcsChart');
         var weights = document.querySelector("#weights").value;
-        var imcs    = document.querySelector("#imcs").value;
+        var imcs = document.querySelector("#imcs").value;
         weights = JSON.parse(weights);
-        imcs    = JSON.parse(imcs);
-        
+        imcs = JSON.parse(imcs);
+
         const labels = Object.keys(weights);
-        const data   = Object.values(weights);
+        const data = Object.values(weights);
         console.log(labels);
         const formatData = data.map(value => value !== null ? value : NaN);
 
         const labelsI = Object.keys(imcs);
-        const dataI   = Object.values(imcs);
+        const dataI = Object.values(imcs);
         console.log(labels);
         const formatDataI = dataI.map(value => value !== null ? value : NaN);
 
@@ -486,5 +490,4 @@
             }
         });
     </script>
-
 </x-app-layout>
