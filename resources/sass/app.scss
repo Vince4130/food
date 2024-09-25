@@ -83,7 +83,42 @@ $backg6: #f44242;
         text-decoration: none;
     } 
 }
- 
+
+
+.months {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    color: black;
+    opacity: $legend-opacity;
+
+    &__links {
+        color: black;
+        text-decoration: none;
+        opacity: $legend-opacity;
+    }
+
+    &__links:hover{
+        opacity: 1;
+        color: black;
+        text-decoration: none;
+    }  
+
+    &__links:focus{
+        opacity: 1;
+        color: black;
+        text-decoration: none;
+    } 
+
+    &__links:active{
+        opacity: 1;
+        color: black;
+        text-decoration: none;
+    } 
+}
+
+
 .dashboard__data {
     display: flex;
     justify-content: space-around;

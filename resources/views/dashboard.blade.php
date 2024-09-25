@@ -65,6 +65,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{ __("Courbe de poids du mois de ") }} {{ $currentMonth }}
+                    <div class="months">
+                        <a class="months__links" href=""><i class="fa-regular fa-square-caret-left fa-xl"></i></a>
+                        <a class="months__links" href=""><i class="fa-regular fa-square-caret-right fa-xl"></i></a>
+                    </div>
                 </div>
                 <div class="dashboard__data data__weight">
                     <input type="hidden" name="weights" id="weights" value="{{ json_encode($weightsCurrentMonth) }}">   
