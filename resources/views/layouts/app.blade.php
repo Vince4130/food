@@ -21,7 +21,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js', 'resources/js/chart-custom.js'])
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100" id="top">

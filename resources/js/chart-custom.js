@@ -24,7 +24,8 @@ new Chart(ctx, {
             data: weights,
             borderWidth: 1,
             fill: false,
-            tension: 0.1
+            tension: 0.1,
+            spanGaps: true
         }]
     },
     options: {
@@ -80,7 +81,8 @@ new Chart(ctxImc, {
             data: imcs,
             borderWidth: 1,
             fill: false,
-            tension: 0.1
+            tension: 0.1,
+            spanGaps: true
         }]
     },
     options: {
