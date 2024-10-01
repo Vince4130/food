@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $mesure = Measurement::getUserLastMesure($user);
 
         $mesures = Measurement::getUserMesuresOfCurrentMonth($user, $firstDay, $lastDay);
-    
+        
         $morpho = Morphology::getUserMorphology($user);
 
         if($morpho !== null) {
@@ -36,8 +36,7 @@ class DashboardController extends Controller
         } else {
             $morphoCoefficient = 0.;
         }
-        
-            
+           
         $imc = $this->calculateImc($mesure);
 
         $indicator = $this->imcIndicator($imc);
@@ -45,9 +44,30 @@ class DashboardController extends Controller
         $weightsRange = $this->weightIndicator($mesure->height ?? 0);
 
         $mesuresCurrentMonth = $this->getMesuresCurrentMonth($mesures, $firstDay, $lastDay);
-
+    
         $weightsCurrentMonth = $mesuresCurrentMonth[0];
+        
         $imcsCurrentMonth    = $mesuresCurrentMonth[1];
+
+        $firstDayLastMonth = Carbon::create($firstDay)->subMonth()->format('Y-m-d'); 
+        
+        $lastDayLastMonth  = Carbon::create($firstDayLastMonth)->endOfMonth()->format('Y-m-d');
+        
+        if($mesure !== null ) {
+
+            $lastMonthMesures = Measurement::getuserLastMesurePreviousMonth($user, $firstDayLastMonth, $lastDayLastMonth);
+
+            if($weightsCurrentMonth[$firstDay] === null) {
+
+                $weightsCurrentMonth[$firstDay] = $lastMonthMesures->weight;   
+           }
+   
+           if($imcsCurrentMonth[$firstDay] === null && $mesure !== null) {
+
+               $imcsCurrentMonth[$firstDay] = $this->calculateImc($lastMonthMesures);
+           }
+        } 
+        
 
         return view('dashboard', [
             'user' => $user,
@@ -209,6 +229,7 @@ class DashboardController extends Controller
         return $mesuresOfMonth;
     }
     
+
     /**
      * getCoeffMorpho
      *
