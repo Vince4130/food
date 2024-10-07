@@ -1,6 +1,6 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
+        <h2 class="text-lg font-medium text-gray-900 dark:text-white">
             {{ __('Saisir votre niveau d\'activité physique au ') }} {{ date('d/m/Y') }}
         </h2>
 

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">
             {{ __('Dashboard') }} : {{ ($user->pseudo != null) ? $user->pseudo : $user->firstname }} {{ ($mesure !== null) ? $mesure->height/100 : '' }}  {{ ($mesure !== null) ? ' m,' : '' }} {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
         </h2>
     </x-slot>
@@ -10,16 +10,16 @@
         
         <div class="anchor pagination">
             <p class="page-item">
-                <a class="page-link anchor__link" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
+                <a class="page-link anchor__link dark:bg-gray-800 dark:text-slate-200" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
             </p>
         </div>
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg dark:shadow-none">
+                <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
                     {{ __("Vos dernières mesure d'IMC et poids enregistrés : ") }} {{ ($mesure !== null) ? date('d/m/Y', strtotime($mesure->date)) : 'aucune données à ce jour' }}
                 </div>
-                <div class="dashboard__data">
+                <div class="dashboard__data dark:bg-gray-800 dark:text-slate-200">
                     <!-- <div class="imc__donut">
                         <div id="donut"></div>
                     </div> -->
@@ -32,7 +32,7 @@
                         <div id="weight" class="imc__donut--justgage">Poids actuel</div>
                     </div>
 
-                    <div class="imc__legend">
+                    <div class="imc__legend dark:text-black">
                             <div class="imc__legend--cat imc__legend--maigre"  title="[imc<18.5]">
                                 <div>Maigreur</div>
                             </div>
@@ -63,14 +63,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
                     {{ __("Courbe de poids du mois de ") }} {{ $currentMonth }}
                     <div class="months">
-                        <a class="months__links" href=""><i class="fa-regular fa-square-caret-left fa-xl"></i></a>
-                        <a class="months__links" href=""><i class="fa-regular fa-square-caret-right fa-xl"></i></a>
+                        <a class="months__links dark:bg-gray-800 dark:text-slate-200" href=""><i class="fa-regular fa-square-caret-left fa-xl"></i></a>
+                        <a class="months__links dark:bg-gray-800 dark:text-slate-200" href=""><i class="fa-regular fa-square-caret-right fa-xl"></i></a>
                     </div>
                 </div>
-                <div class="dashboard__data data__weight">
+                <div class="dashboard__data data__weight dark:bg-gray-800">
                     <input type="hidden" name="weights" id="weights" value="{{ json_encode($weightsCurrentMonth) }}">   
                     <div class="dashboard__data--weightsChart">
                         <canvas id="weightsChart"></canvas>
@@ -83,10 +83,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
                     {{ __("Courbe imc du mois de ") }} {{ $currentMonth }}
                 </div>
-                <div class="dashboard__data data__imc">
+                <div class="dashboard__data data__imc dark:bg-gray-800 dark:text-slate-200">
                     <input type="hidden" name="imcs" id="imcs" value="{{ json_encode($imcsCurrentMonth) }}">   
                     <div class="dashboard__data--imcsChart">
                         <canvas id="imcsChart"></canvas>
@@ -99,10 +99,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
                     {{ __("Calcul poids idéal") }}
                 </div>
-                <div class="dashboard__idealweight">
+                <div class="dashboard__idealweight dark:bg-gray-800 dark:text-slate-200">
                     
                     <input type="hidden" name="idealWeight" id="idealWeight" value="{{ json_encode($mesure) }}">   
                     <div class="dashboard__idealweight--lorentz" id="lorentz">
@@ -124,7 +124,7 @@
 
         <div class="anchor pagination" id="bottom">
             <p class="page-item">
-                <a class="page-link anchor__link" href="#top"><i class="fa-regular fa-square-caret-up fa-2xl"></i></a>
+                <a class="page-link anchor__link dark:bg-gray-800 dark:text-slate-200" href="#top"><i class="fa-regular fa-square-caret-up fa-2xl"></i></a>
             </p>
         </div>
     

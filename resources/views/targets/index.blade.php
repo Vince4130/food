@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white">
             Calcul métabolisme de base (MB) et dépense énergétique journalière (DEJ)
         </h2>
     </x-slot>
