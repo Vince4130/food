@@ -50,10 +50,27 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="navbar-brand" href="{{ route('measurements.destroy', $mesure->id) }}">
+                                            <a class="navbar-brand" data-bs-toggle="modal" data-bs-target="#delMesure{{ $mesure->id }}">
                                                 <i class="fa-regular fa-trash-can fa-lg"></i>
                                             </a>
                                         </td>
+                                        <div class="modal fade" id="delMesure{{ $mesure->id }}" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Supprimez une mesure</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Voulez-vous supprimer la mesure du  {{ date('d/m/Y', strtotime($mesure->date)) }} ?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a class="btn btn-dark" href="{{ route('measurements.destroy', $mesure->id) }}">Yes</a>
+                                                        <a class="btn btn-dark" data-bs-dismiss="modal" aria-label="close">No</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
                                     @php $count++ @endphp
                                     @endforeach
