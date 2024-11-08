@@ -177,11 +177,11 @@ class DashboardController extends Controller
      *
      * @return string
      */
-    public function frenchMonth() : string 
+    public function frenchMonth($date) : string 
     {
         $months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 
-        $mois = Carbon::now()->format('n');
+        $mois = Carbon::parse($date)->format('n');
 
         return $months[$mois-1];
     } 
