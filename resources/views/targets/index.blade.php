@@ -37,10 +37,27 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="navbar-brand" href="{{ route('targets.destroy', $target->id) }}">
+                                            <a class="navbar-brand" data-bs-toggle="modal" data-bs-target="#delTarget{{ $target->id }}">
                                                 <i class="fa-regular fa-trash-can fa-lg"></i>
                                             </a>
                                         </td>
+                                        <div class="modal fade" id="delTarget{{ $target->id }}" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Supprimez un objectif</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Voulez-vous supprimer l'objectif qui prend fin le {{ date('d/m/Y', strtotime($target->endDate)) }} ?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a class="btn btn-light" data-bs-dismiss="modal" aria-label="close">{{ __("Cancel") }}</a>
+                                                        <a class="btn btn-danger" href="{{ route('targets.destroy', $target->id) }}">{{ __("Delete") }}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
                                     @endforeach
                                 <tbody>

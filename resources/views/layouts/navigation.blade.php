@@ -35,7 +35,7 @@
                                 </button>
                             </x-slot>
 
-                            <x-slot name="content">
+                            <x-slot name="content" class="dark:bg-gray-800 dark:text-slate-200">
                                 <x-dropdown-link :href="route('measurements.index')">
                                     {{ __('Historique poids') }}
                                 </x-dropdown-link>
