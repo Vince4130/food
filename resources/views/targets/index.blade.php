@@ -15,7 +15,7 @@
                     </div>
                     <!-- <div class="card">
                         <div class="card-body bg-light"> -->
-                        <table id="mesure__table" class="table table-light authortable table-hover">
+                        <table id="mesure__table" class="table table-light table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Date de début</th>
@@ -25,7 +25,7 @@
                                         <th>Supprimer</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="table-group-divider">
                                     @foreach($targets as $target)
                                     <tr>
                                         <td>{{ date('d/m/Y', strtotime($target->startDate)) }}</td>
