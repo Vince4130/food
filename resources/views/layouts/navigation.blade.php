@@ -44,21 +44,25 @@
                                     {{ __('Saisir votre poids') }}
                                 </x-dropdown-link>
                                 
-                                <x-dropdown-link :href="route('morphologies.create')">
-                                    {{ __('Saisir votre morphologie') }}
-                                </x-dropdown-link>
-                                
-                                <x-dropdown-link :href="route('morphologies.edit', Auth::user()->id)" >
-                                    {{ __('Mettre à jour votre morphologie') }}
-                                </x-dropdown-link> 
+                                @if(!$existMorpho)
+                                    <x-dropdown-link :href="route('morphologies.create')">
+                                        {{ __('Saisir votre morphologie') }}
+                                    </x-dropdown-link>
+                                @else
+                                    <x-dropdown-link :href="route('morphologies.edit', Auth::user()->id)" >
+                                        {{ __('Mettre à jour votre morphologie') }}
+                                    </x-dropdown-link> 
+                                @endif
 
-                                <x-dropdown-link :href="route('activities.create')" >
-                                    {{ __("Saisir votre niveau d'activité physique") }}
-                                </x-dropdown-link>
-                                
-                                <x-dropdown-link :href="route('activities.edit', Auth::user()->id)" >
-                                    {{ __("Mettre à jour votre niveau d'activité physique") }}
-                                </x-dropdown-link> 
+                                @if(!$existActivity)
+                                    <x-dropdown-link :href="route('activities.create')" >
+                                        {{ __("Saisir votre niveau d'activité physique") }}
+                                    </x-dropdown-link>
+                                @else
+                                    <x-dropdown-link :href="route('activities.edit', Auth::user()->id)" >
+                                        {{ __("Mettre à jour votre niveau d'activité physique") }}
+                                    </x-dropdown-link>
+                                @endif
                             </x-slot>
                         </x-dropdown>
                     </div>

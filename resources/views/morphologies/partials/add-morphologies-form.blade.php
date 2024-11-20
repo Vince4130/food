@@ -31,13 +31,13 @@
         <div class="mt-4">
             <div class="morpho mt-4">
                 <label for="slim">Mince</label>
-                <input id="slim" class="block mt-1" type="radio" name="morpho" value="slim" {{ old('morpho') == 'slim' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
+                <input id="slim" class="block mt-1" type="radio" name="morpho" value="slim" {{ (isset($userMorphology) && $userMorphology->morpho == 'slim') ? 'checked' : '' }} {{ isset($userMorphology) ? 'disabled' : '' }} required autofocus autocomplete="morpho" />
 
                 <label for="normal">Normale</label>
-                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" {{ old('morpho') == 'normal' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
+                <input id="normal" class="block mt-1" type="radio" name="morpho" value="normal" {{ (isset($userMorphology) && $userMorphology->morpho == 'normal') ? 'checked' : '' }} {{ isset($userMorphology) ? 'disabled' : '' }} required autofocus autocomplete="morpho" />
 
                 <label for="large">Large</label>
-                <input id="large" class="block mt-1" type="radio" name="morpho" value="large" {{ old('morpho') == 'large' ? 'checked' : '' }} required autofocus autocomplete="morpho" />
+                <input id="large" class="block mt-1" type="radio" name="morpho" value="large" {{ (isset($userMorphology) && $userMorphology->morpho == 'large') ? 'checked' : '' }} {{ isset($userMorphology) ? 'disabled' : '' }} required autofocus autocomplete="morpho" />
             </div>
             <x-input-error :messages="$errors->get('date')" class="mt-2" />
             <x-input-error :messages="$errors->get('morpho')" class="mt-2" />
