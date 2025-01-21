@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use PhpParser\Node\Expr\Cast\Object_;
 use Ramsey\Uuid\Type\Integer;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use PhpParser\Node\Expr\Cast\Array_;
 
 class Measurement extends Model
 {
@@ -46,19 +49,51 @@ class Measurement extends Model
             ->where('users.id', $user->id)
             ->orderByDesc('date')
             ->first();
-
+        
         return $mesure;
     }
+       
     
     /**
-     * getUserWeigthsOfCurrentMonth
+     * getuserLastMesurePreviousMonth
      *
      * @param  mixed $user
      * @param  mixed $firstDay
      * @param  mixed $lastDay
-     * @return void
+     * @return Object
      */
-    public static function getUserMesuresOfCurrentMonth(User $user, string $firstDay, string $lastDay)
+    public static function getuserLastMesurePreviousMonth(User $user, string $firstDay, string $lastDay): ?Object
+    {
+        $mesureOfPreviousMonth = DB::table('measurements')
+                        ->select('measurements.id', 'date', 'weight', 'height', 'sexe')
+                        ->join('users', 'users.id', '=', 'measurements.user_id')
+                        ->where('users.id', $user->id)
+                        ->where('date', '>=', $firstDay)
+                        ->where('date', '<=', $lastDay)
+                        ->orderByDesc('date')
+                        ->first();
+
+        if(!$mesureOfPreviousMonth) {
+            
+            $previousFirstDay = Carbon::create($firstDay)->subMonth()->format('Y-m-d'); 
+            $previouslastDay  = Carbon::create($previousFirstDay)->endOfMonth()->format('Y-m-d');
+            
+            return self::getuserLastMesurePreviousMonth($user, $previousFirstDay, $previouslastDay);
+        }
+
+        return $mesureOfPreviousMonth;
+    }
+
+       
+    /**
+     * getUserMesuresOfCurrentMonth
+     *
+     * @param  mixed $user
+     * @param  mixed $firstDay
+     * @param  mixed $lastDay
+     * @return Object
+     */
+    public static function getUserMesuresOfCurrentMonth(User $user, string $firstDay, string $lastDay): ?Object
     {
         $mesuresOfMonth = DB::table('measurements')
             ->select('date', 'weight', 'height')
@@ -68,7 +103,7 @@ class Measurement extends Model
             ->where('date', '<=', $lastDay)
             ->orderBy('date')
             ->get();
-
+        // dd($mesuresOfMonth->count());
         return $mesuresOfMonth;
     }
     

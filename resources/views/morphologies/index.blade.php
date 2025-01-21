@@ -28,7 +28,7 @@
                                         <td>{{ date('d/m/Y', strtotime($morphology->date)) }}</td>
                                         <td>{{ $morphology->morpho }}</td>
                                         <td> 
-                                            <a class="navbar-brand" href="{{ route('morphologies.edit', $morphology->id) }}">
+                                            <a class="navbar-brand" href="{{ route('morphologies.edit', $morphology->user_id) }}">
                                                 <i class="fa-solid fa-pen-to-square fa-lg"></i>
                                             </a>
                                         </td>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white">
             Historique des mesures au {{ date('d/m/Y') }}
         </h2>
     </x-slot>
@@ -13,7 +13,7 @@
                         <div class="card-body bg-light">
                             <!-- <h5 class="container__title">Historique des mesures au {{ date('d/m/Y') }}</h5> -->
                             @if(count($mesures) > 0)
-                            <table id="mesure__table" class="table table-light authortable table-hover">
+                            <table id="mesure__table" class="table table-light table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -25,7 +25,7 @@
                                         <th>Supprimer</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="table-group-divider">
                                     @php $count = 0 @endphp
                                     @foreach($mesures as $mesure)
                                     <tr>
@@ -34,15 +34,17 @@
                                         <td>{{ $mesure->height }}</td>
                                         <td>{{ round($mesure->weight/($mesure->height*$mesure->height)*10000, 2) }}</td>
                                         <td>
-                                            @if($tendances[$count] == '+')
-                                                <img src="{{ asset('img/prise.png') }}" alt="prise" width="30" />
-                                            @elseif($tendances[$count] == '-')
-                                                <img src="{{ asset('img/perte.png') }}" alt="perte" width="30" />
-                                            @elseif($tendances[$count] == "=") 
-                                                <img src="{{ asset('img/stable.png') }}" alt="stable" width="25" />
-                                            @elseif($tendances[0])
-                                                -
-                                            @endif 
+                                            <div class="tendencies">
+                                                @if($tendances[$count] == '+')
+                                                    <img src="{{ asset('img/prise.png') }}" alt="prise" width="30" />
+                                                @elseif($tendances[$count] == '-')
+                                                    <img src="{{ asset('img/perte.png') }}" alt="perte" width="30" />
+                                                @elseif($tendances[$count] == "=") 
+                                                    <img src="{{ asset('img/stable.png') }}" alt="stable" width="25" />
+                                                @elseif($tendances[0])
+                                                    -
+                                                @endif 
+                                            </div>
                                         </td>
                                         <td> 
                                             <a class="navbar-brand" href="{{ route('measurements.edit', $mesure->id) }}">
@@ -50,10 +52,27 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="navbar-brand" href="{{ route('measurements.destroy', $mesure->id) }}">
+                                            <button type="submit" class="navbar-brand" data-bs-toggle="modal" data-bs-target="#delMesure{{ $mesure->id }}">
                                                 <i class="fa-regular fa-trash-can fa-lg"></i>
-                                            </a>
+                                            </button>
                                         </td>
+                                        <div class="modal fade" id="delMesure{{ $mesure->id }}" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Supprimez une mesure</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Voulez-vous supprimer la mesure du {{ date('d/m/Y', strtotime($mesure->date)) }} ?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a class="btn btn-light" data-bs-dismiss="modal" aria-label="close">{{ __("Cancel") }}</a>
+                                                        <a class="btn btn-danger" href="{{ route('measurements.destroy', $mesure->id) }}">{{ __("Delete") }}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
                                     @php $count++ @endphp
                                     @endforeach

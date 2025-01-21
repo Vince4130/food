@@ -73,9 +73,9 @@ class ActivityController extends Controller
     public function edit(int $userId)
     {
         $user = User::find($userId);
-
-        $activity = Activity::find($user->id);
-
+        
+        $activity = Activity::getUserActivity($user);
+        
         return view('activities.edit', compact('activity'));
     }
 
@@ -90,7 +90,7 @@ class ActivityController extends Controller
         
         $activity->save();
 
-        return redirect(route('activities.edit', $activity->id))->with('success', 'Niveau d\'activité physique mofifié avec succès.');
+        return redirect(route('activities.edit', $activity->user_id))->with('success', 'Niveau d\'activité physique mofifié avec succès.');
     }
 
     /**

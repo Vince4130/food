@@ -30,7 +30,31 @@ $backg6: #f44242;
 //     // background-size: 81%;
 // }
 
+.change-mode {
+    display: flex;
+    width: 100px;
+    height: 34px;
+    justify-content: center;
+}
+
+/** Tables measurements and targets **/
+
+#mesure__table {
+    text-align: center;
+}
+
+.tendencies {
+    margin: auto;
+    width: fit-content;
+}
+ 
+// .dark-mode {
+//     color: white !important;
+//     background-color: rgba(0, 0, 0, 1) !important;
+// } 
+
 /** Welcome blade **/
+
 .welcome {
     display: flex;
     width: 400px;
@@ -378,6 +402,6 @@ $backg6: #f44242;
         } 
     }
 
-   
+
 } 
  

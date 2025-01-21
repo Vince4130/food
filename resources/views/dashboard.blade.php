@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">
             {{ __('Dashboard') }} : {{ ($user->pseudo != null) ? $user->pseudo : $user->firstname }} {{ ($mesure !== null) ? $mesure->height/100 : '' }}  {{ ($mesure !== null) ? ' m,' : '' }} {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
         </h2>
     </x-slot>
@@ -10,16 +10,16 @@
         
         <div class="anchor pagination">
             <p class="page-item">
-                <a class="page-link anchor__link" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
+                <a class="page-link anchor__link dark:bg-gray-800 dark:text-slate-200" href="#bottom"><i class="fa-regular fa-square-caret-down fa-2xl"></i></a>
             </p>
         </div>
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg dark:shadow-none">
+                <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
                     {{ __("Vos dernières mesure d'IMC et poids enregistrés : ") }} {{ ($mesure !== null) ? date('d/m/Y', strtotime($mesure->date)) : 'aucune données à ce jour' }}
                 </div>
-                <div class="dashboard__data">
+                <div class="dashboard__data dark:bg-gray-800 dark:text-slate-200">
                     <!-- <div class="imc__donut">
                         <div id="donut"></div>
                     </div> -->
@@ -32,7 +32,7 @@
                         <div id="weight" class="imc__donut--justgage">Poids actuel</div>
                     </div>
 
-                    <div class="imc__legend">
+                    <div class="imc__legend dark:text-black">
                             <div class="imc__legend--cat imc__legend--maigre"  title="[imc<18.5]">
                                 <div>Maigreur</div>
                             </div>
@@ -63,14 +63,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
                     {{ __("Courbe de poids du mois de ") }} {{ $currentMonth }}
                     <div class="months">
-                        <a class="months__links" href=""><i class="fa-regular fa-square-caret-left fa-xl"></i></a>
-                        <a class="months__links" href=""><i class="fa-regular fa-square-caret-right fa-xl"></i></a>
+                        <a class="months__links dark:bg-gray-800 dark:text-slate-200" href=""><i class="fa-regular fa-square-caret-left fa-xl"></i></a>
+                        <a class="months__links dark:bg-gray-800 dark:text-slate-200" href=""><i class="fa-regular fa-square-caret-right fa-xl"></i></a>
                     </div>
                 </div>
-                <div class="dashboard__data data__weight">
+                <div class="dashboard__data data__weight dark:bg-gray-800">
                     <input type="hidden" name="weights" id="weights" value="{{ json_encode($weightsCurrentMonth) }}">   
                     <div class="dashboard__data--weightsChart">
                         <canvas id="weightsChart"></canvas>
@@ -83,10 +83,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
                     {{ __("Courbe imc du mois de ") }} {{ $currentMonth }}
                 </div>
-                <div class="dashboard__data data__imc">
+                <div class="dashboard__data data__imc dark:bg-gray-800 dark:text-slate-200">
                     <input type="hidden" name="imcs" id="imcs" value="{{ json_encode($imcsCurrentMonth) }}">   
                     <div class="dashboard__data--imcsChart">
                         <canvas id="imcsChart"></canvas>
@@ -99,10 +99,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
                     {{ __("Calcul poids idéal") }}
                 </div>
-                <div class="dashboard__idealweight">
+                <div class="dashboard__idealweight dark:bg-gray-800 dark:text-slate-200">
                     
                     <input type="hidden" name="idealWeight" id="idealWeight" value="{{ json_encode($mesure) }}">   
                     <div class="dashboard__idealweight--lorentz" id="lorentz">
@@ -124,7 +124,7 @@
 
         <div class="anchor pagination" id="bottom">
             <p class="page-item">
-                <a class="page-link anchor__link" href="#top"><i class="fa-regular fa-square-caret-up fa-2xl"></i></a>
+                <a class="page-link anchor__link dark:bg-gray-800 dark:text-slate-200" href="#top"><i class="fa-regular fa-square-caret-up fa-2xl"></i></a>
             </p>
         </div>
     
@@ -146,348 +146,4 @@
         </div>
     </div>
     @endif
-    <script>
-        // var myColors = [
-        //     "#a3f5ff",
-        //     "#54ce54",
-        //     "#ffff00",
-        //     "#ffb800",
-        //     "#ff6800",
-        //     "#f44242"
-        // ];
-
-        // Récupération des données
-        var myImc    = document.querySelector("#myImc").value;
-        var myWeight = document.querySelector("#myWeight").value;
-        var range =  document.querySelector("#range").value;
-        var idealWeight = document.querySelector("#idealWeight").value;
-        var age = document.querySelector("#age").value;
-        var morphoCoefficient = document.querySelector("#morphoCoefficient").value;
-
-        range = JSON.parse(range);
-        idealWeight = JSON.parse(idealWeight);
-
-        // Calcul du poids ideal formule de Lorentz et Creff
-        var height = idealWeight.height;
-        var gender = idealWeight.sexe;
-        var coef = NaN;
-
-        if(gender = 'h') {
-            coef = 4;
-        } else {
-            coef = 2.5;
-        }
-
-        var lorentz = height - 100 - ((height -150)/coef);
-        var creff   = (height - 100 + age/10)*morphoCoefficient;
-
-        for(i=0; i < range.length; i++) {
-            range[i] = Math.floor(range[i]*100)/100;
-        }
-
-        // Jauge IMC
-        var g1 = new JustGage({
-            id: "imc",
-            value: myImc,
-            min: 0,
-            max: 60,
-            donut: true,
-            decimals: 2,
-            title: "IMC",
-            // levelColors: myColors,
-            customSectors: {
-                ranges: [{
-                    color: "#a3f5ff",
-                    lo: 0,
-                    hi: 18.5
-                }, {
-                    color: "#54ce54",
-                    lo: 18.6,
-                    hi: 24.9
-                }, {
-                    color: "#ffff00",
-                    lo: 25,
-                    hi: 29.9
-                }, {
-                    color: "#ffb800",
-                    lo: 30,
-                    hi: 34.9
-                }, {
-                    color: "#ff6800",
-                    lo: 35,
-                    hi: 39.9
-                }, {
-                    color: "#f44242",
-                    lo: 40,
-                    hi: 100
-                }]
-            },
-            pointer: true,
-            pointerOptions: {
-                toplength: -15,
-                bottomlength: 10,
-                bottomwidth: 12,
-                color: '#8e8e93',
-                stroke: '#ffffff',
-                stroke_width: 3,
-                stroke_linecap: 'round'
-            },
-            gaugeWidthScale: 0.6,
-            counter: true,
-            relativeGaugeSize: true
-        });
-
-        // Jauge poids actuel
-        var g2 = new JustGage({
-            id: "weight",
-            value: myWeight,
-            min: 0,
-            max: 300,
-            donut: true,
-            decimals: 2,
-            title: "Poids",
-            // levelColors: myColors,
-            customSectors: {
-                ranges: [{
-                    color: "#a3f5ff",
-                    lo: 0,
-                    hi: range[0] - 0.01
-                }, {
-                    color: "#54ce54",
-                    lo: range[0],
-                    hi: range[1] - 0.01
-                }, {
-                    color: "#ffff00",
-                    lo: range[1],
-                    hi: range[2] - 0.01
-                }, {
-                    color: "#ffb800",
-                    lo: range[2],
-                    hi: range[3] - 0.01
-                }, {
-                    color: "#ff6800",
-                    lo: range[3],
-                    hi: range[4] - 0.01
-                }
-                , {
-                    color: "#f44242",
-                    lo: range[4],
-                    hi: 300
-                }]
-            },
-            pointer: true,
-            pointerOptions: {
-                toplength: -15,
-                bottomlength: 10,
-                bottomwidth: 12,
-                color: '#8e8e93',
-                stroke: '#ffffff',
-                stroke_width: 3,
-                stroke_linecap: 'round'
-            },
-            gaugeWidthScale: 0.6,
-            counter: true,
-            relativeGaugeSize: true
-        });
-
-        // Jauge poids idéal formule de Lorentz
-        var g3 = new JustGage({
-            id: "lorentz",
-            value: lorentz,
-            min: 0,
-            max: 200,
-            donut: true,
-            decimals: 2,
-            title: "Poids idéal",
-            customSectors: {
-                ranges: [{
-                    color: "#54ce54",
-                    lo: 0,
-                    hi: lorentz
-                }, {
-                    color: "#f44242",
-                    lo: lorentz + 0.01,
-                    hi: 200
-                }]
-            },
-            pointer: true,
-            pointerOptions: {
-                toplength: -15,
-                bottomlength: 10,
-                bottomwidth: 12,
-                color: '#8e8e93',
-                stroke: '#ffffff',
-                stroke_width: 3,
-                stroke_linecap: 'round'
-            },
-            gaugeWidthScale: 0.6,
-            counter: true,
-            relativeGaugeSize: true
-        });
-
-        // Jauge poids idéal formule de Creff
-        var g4 = new JustGage({
-            id: "creff",
-            value: creff,
-            min: 0,
-            max: 200,
-            donut: true,
-            decimals: 2,
-            title: "Poids idéal",
-            customSectors: {
-                ranges: [{
-                    color: "#54ce54",
-                    lo: 0,
-                    hi: creff
-                }, {
-                    color: "#f44242",
-                    lo: creff + 0.01,
-                    hi: 200
-                }]
-            },
-            pointer: true,
-            pointerOptions: {
-                toplength: -15,
-                bottomlength: 10,
-                bottomwidth: 12,
-                color: '#8e8e93',
-                stroke: '#ffffff',
-                stroke_width: 3,
-                stroke_linecap: 'round'
-            },
-            gaugeWidthScale: 0.6,
-            counter: true,
-            relativeGaugeSize: true
-        });
-    </script>
-    <script>
-        const ctx = document.getElementById('weightsChart');
-        const ctxImc = document.getElementById('imcsChart');
-        var weights = document.querySelector("#weights").value;
-        var imcs = document.querySelector("#imcs").value;
-        weights = JSON.parse(weights);
-        imcs = JSON.parse(imcs);
-
-        const labels = Object.keys(weights);
-        const data = Object.values(weights);
-        console.log(labels);
-        const formatData = data.map(value => value !== null ? value : NaN);
-
-        const labelsI = Object.keys(imcs);
-        const dataI = Object.values(imcs);
-        console.log(labels);
-        const formatDataI = dataI.map(value => value !== null ? value : NaN);
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Poids en Kg',
-                    data: weights,
-                    borderWidth: 1,
-                    fill: false,
-                    tension: 0.1
-                }]
-            },
-            options: {
-                locale: "fr-FR",
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'day',
-                            tooltypeFormat: 'DD/MM/YYYY',
-                            displayFormats: {
-                                day: 'dd MM'
-                            }
-                        }
-                    },
-                    y: {
-                        label: 'Poids',
-                        beginAtZero: true,
-                        max: 160
-                    }
-                },
-                plugins: {
-                    annotation: {
-                        annotations: {
-                            line1: {
-                                type: 'line',
-                                yMin: 70,
-                                yMax: 70,
-                                borderColor: 'rgb(255, 99, 132)',
-                                borderWidth: 2,
-                            },
-                            label: {
-                                display: true,
-                                content: 'Poids Cible 70 kg',
-                                // yValue: 70,
-                                color: 'rgb(255, 99, 132)',
-                                backgroundColor: '#ffff',
-                                position: 'start',
-                            },
-                        }
-                    }
-                }
-            }
-        });
-
-        new Chart(ctxImc, {
-            type: 'line',
-            data: {
-                labels: labelsI,
-                datasets: [{
-                    label: 'Imc',
-                    data: imcs,
-                    borderWidth: 1,
-                    fill: false,
-                    tension: 0.1
-                }]
-            },
-            options: {
-                locale: "fr-FR",
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'day',
-                            tooltypeFormat: 'DD/MM/YYYY',
-                            displayFormats: {
-                                day: 'dd MM'
-                            }
-                        }
-                    },
-                    y: {
-                        label: 'Imc',
-                        beginAtZero: true,
-                        max: 50
-                    }
-                },
-                plugins: {
-                    annotation: {
-                        annotations: {
-                            line1: {
-                                type: 'line',
-                                yMin: 22.9,
-                                yMax: 22.9,
-                                borderColor: 'rgb(255, 99, 132)',
-                                borderWidth: 2,
-                            },
-                            label: {
-                                display: true,
-                                content: 'Imc Cible',
-                                // yValue: 70,
-                                color: 'rgb(255, 99, 132)',
-                                backgroundColor: '#ffff',
-                                position: 'start',
-                            },
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 </x-app-layout>
