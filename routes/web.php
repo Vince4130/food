@@ -19,6 +19,10 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/dashboard/{year?}/{month?}', [DashboardController::class, 'index'])
+    ->where(['year' => '[0-9]{4}', 'month' => '[0-9]{1,2}'])
+    ->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

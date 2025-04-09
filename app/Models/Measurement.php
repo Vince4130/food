@@ -125,6 +125,28 @@ class Measurement extends Model
         return $height;
     }
     
+        
+    /**
+     * getUserWeight
+     *
+     * @param  mixed $user
+     * @return void
+     */
+    public static function getUserWeights(User $user, $lastDay)
+    {
+        $weights = DB::table('measurements')
+                ->select('weight', 'date')
+                ->where('date', '<=', $lastDay)
+                // ->whereYear('date', $date->year)
+                // ->whereMonth('date', $date->month)
+                ->where('user_id', $user->id)
+                ->orderBy('date')
+                ->get();
+        
+        return $weights;
+    }
+
+
      /**
      * The attributes that are mass assignable.
      *
