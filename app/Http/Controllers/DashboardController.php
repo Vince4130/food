@@ -14,17 +14,26 @@ use Ramsey\Uuid\Type\Integer;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $year = null, $month = null)
     {
         $user = $request->user();
 
         $firstDay   = Carbon::now()->startOfMonth()->format('Y-m-d'); //format('Y-m-01'); 
         $lastDay    = Carbon::now()->endOfMonth()->format('Y-m-d');
 
+        $currentdate = Carbon::create($year ?? now()->year, $month ?? now()->month, 1);
+        $isLeapYear = $currentdate->isLeapYear();
+
+        $weights = Measurement::getUserWeights($user, $lastDay);
+        // dd($weights);
+        $prev = $currentdate->copy()->subMonth();
+        $next = $currentdate->copy()->addMonth();
+
         $age = $user->calculateAge();
 
         $currentMonth = $this->frenchMonth($firstDay);
-
+        $previousMonth = Carbon::today()->startOfMonth()->subMonth()->format('Y-m-d');
+        // dd($previousMonth);
         $mesure = Measurement::getUserLastMesure($user);
 
         $mesures = Measurement::getUserMesuresOfCurrentMonth($user, $firstDay, $lastDay);
@@ -80,7 +89,11 @@ class DashboardController extends Controller
             'age' => $age,
             'morpho' => $morpho,
             'morphoCoefficient' =>  $morphoCoefficient,
-            'currentMonth' => $currentMonth
+            'currentMonth' => $currentMonth,
+            'previousMonth' => $previousMonth,
+            'weights' => $weights,
+            'prev' => $prev,
+            'next' => $next,
         ]);   
     }
 
