@@ -27,8 +27,7 @@ if(!function_exists("tagVersion")) {
 
         $version = $tags[0]['name'];
 
-        return $version;
-        
+        return $version;   
     }
 }
     
