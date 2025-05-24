@@ -63,8 +63,17 @@ class Measurement extends Model
      * @return Object
      */
     public static function getuserLastMesurePreviousMonth(User $user, string $firstDay, string $lastDay): ?Object
-    {
-        $mesureOfPreviousMonth = DB::table('measurements')
+    {   
+
+        $nbMesures = Measurement::where('user_id', $user->id)->count();
+        
+        if($nbMesures == 1) {
+
+            $mesureOfPreviousMonth = self::getUserLastMesure($user);
+            
+        } else {
+
+            $mesureOfPreviousMonth = DB::table('measurements')
                         ->select('measurements.id', 'date', 'weight', 'height', 'sexe')
                         ->join('users', 'users.id', '=', 'measurements.user_id')
                         ->where('users.id', $user->id)
@@ -72,15 +81,16 @@ class Measurement extends Model
                         ->where('date', '<=', $lastDay)
                         ->orderByDesc('date')
                         ->first();
+        
+            if(!$mesureOfPreviousMonth) {
 
-        if(!$mesureOfPreviousMonth) {
-            
-            $previousFirstDay = Carbon::create($firstDay)->subMonth()->format('Y-m-d'); 
-            $previouslastDay  = Carbon::create($previousFirstDay)->endOfMonth()->format('Y-m-d');
-            
-            return self::getuserLastMesurePreviousMonth($user, $previousFirstDay, $previouslastDay);
+                $previousFirstDay = Carbon::create($firstDay)->subMonth()->format('Y-m-d'); 
+                $previouslastDay  = Carbon::create($previousFirstDay)->endOfMonth()->format('Y-m-d');
+                
+                return self::getuserLastMesurePreviousMonth($user, $previousFirstDay, $previouslastDay);
+            }
         }
-
+        
         return $mesureOfPreviousMonth;
     }
 
