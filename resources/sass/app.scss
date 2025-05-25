@@ -267,6 +267,21 @@ $backg6: #f44242;
     }
 }
 
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer__links {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 20px;
+
+     &--social:hover {
+        font-weight: bold;
+    }
+}
+
 
 /** Activities blade **/
 
@@ -407,5 +422,6 @@ $backg6: #f44242;
     text-align: center;
     font-weight: bold;
 }
+
 
  
