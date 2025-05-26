@@ -65,7 +65,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:bg-gray-800 dark:text-slate-200">
-                    {{ __("Courbe de poids du mois de ") }}
+                    {{ __("Courbe de poids du mois de ") }} {{ $currentMonth }}
                     <div class="months">
                         <a class="months__links dark:bg-gray-800 dark:text-slate-200" href="{{ route('dashboard', ['year' => $prev->year, 'month' => $prev->month]) }}"><i class="fa-regular fa-square-caret-left fa-xl"></i></a>
                         <a class="months__links dark:bg-gray-800 dark:text-slate-200" href="{{ route('dashboard', ['year' => $next->year, 'month' => $next->month]) }}"><i class="fa-regular fa-square-caret-right fa-xl"></i></a>
