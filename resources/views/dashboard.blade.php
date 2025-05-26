@@ -152,7 +152,7 @@
         <div class="footer">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">
                 @php $version = tagVersion() @endphp
-                Version : {{ $version }}   
+                Version : {{ $version ?? "v1.0.0"}}   
             </h2>
             <div class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">
                 <span>Vince&nbsp;<i class="fa-regular fa-copyright"></i>&nbsp;2024&nbsp;All Rights Reserved</span>
