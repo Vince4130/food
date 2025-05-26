@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">
             {{ __('Dashboard') }} : {{ ($user->pseudo != null) ? $user->pseudo : $user->firstname }} {{ ($mesure !== null) ? $mesure->height/100 : '' }}  {{ ($mesure !== null) ? ' m,' : '' }} {{ $age }} ans, de sexe {{ ($user->sexe == 'h') ? 'masculin' : 'féminin' }}   
@@ -146,4 +147,21 @@
         </div>
     </div>
     @endif
+
+    <x-slot name="footer">
+        <div class="footer">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">
+                @php $version = tagVersion() @endphp
+                Version : {{ $version ?? "v1.0.0"}}   
+            </h2>
+            <div class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">
+                <span>Vince&nbsp;<i class="fa-regular fa-copyright"></i>&nbsp;2024&nbsp;All Rights Reserved</span>
+            </div>
+            <div class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200 footer__links">
+                <a class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200 footer__links--social" href="#"><i class="fa-brands fa-facebook fa-lg"></i></a>
+                <a class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200 footer__links--social" href="#"><i class="fa-brands fa-x-twitter fa-lg"></i></a>
+                <a class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200 footer__links--social" href="#"><i class="fa-brands fa-instagram fa-lg"></i></a>
+            </div>
+        </div>
+    </x-slot>
 </x-app-layout>

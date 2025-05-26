@@ -71,11 +71,6 @@ class Measurement extends Model
 
             $mesureOfPreviousMonth = self::getUserLastMesure($user);
             
-            // DB::table('measurements')
-            //             ->select('measurements.id', 'date', 'weight', 'height', 'sexe')
-            //             ->join('users', 'users.id', '=', 'measurements.user_id')
-            //             ->where('users.id', $user->id)
-            //             ->first();
         } else {
 
             $mesureOfPreviousMonth = DB::table('measurements')
