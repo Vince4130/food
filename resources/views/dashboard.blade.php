@@ -151,7 +151,7 @@
     <x-slot name="footer">
         <div class="footer">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">
-                @php $version = tagVersion() @endphp
+                @php $version = 'v1.0.0' @endphp
                 Version : {{ $version ?? "v1.0.0"}}   
             </h2>
             <div class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-200">

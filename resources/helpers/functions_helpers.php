@@ -1,6 +1,6 @@
 <?php
 
-if(!function_exists("tagVersion")) {
+/*if(!function_exists("tagVersion")) {
     
     function tagVersion()
     {
@@ -29,6 +29,6 @@ if(!function_exists("tagVersion")) {
 
         return $version;   
     }
-}
+}*/
     
     
