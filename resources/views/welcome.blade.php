@@ -1,6 +1,6 @@
 
 <x-guest-layout>
-    @php $version = 'v1.0.0' @endphp
+    @php $version = tagVersion() @endphp
     <h3 class="title">Bienvenue sur Food</h3>
     <h5 class="version">{{ $version ?? "v1.0.0"  }}</h5>
     <div class="welcome">
