@@ -2,8 +2,10 @@ const ctx = document.getElementById('weightsChart');
 const ctxImc = document.getElementById('imcsChart');
 var weights = document.querySelector("#weights").value;
 var imcs = document.querySelector("#imcs").value;
+var target = document.querySelector("#targetWeight").value;
 weights = JSON.parse(weights);
 imcs = JSON.parse(imcs);
+target = JSON.parse(target)
 
 const labels = Object.keys(weights);
 const data = Object.values(weights);
@@ -14,6 +16,11 @@ const labelsI = Object.keys(imcs);
 const dataI = Object.values(imcs);
 console.log(labels);
 const formatDataI = dataI.map(value => value !== null ? value : NaN);
+
+const labelT = Object.keys(target);
+const dataT = Object.values(target);
+console.log(labels);
+const formatDataT = dataT.map(value => value !== null ? value : NaN);
 
 new Chart(ctx, {
     type: 'line',
@@ -53,15 +60,23 @@ new Chart(ctx, {
                 annotations: {
                     line1: {
                         type: 'line',
-                        yMin: 70,
-                        yMax: 70,
+                        datasets: [{
+                            // label: 'Poids en Kg',
+                            data: target,
+                            // borderWidth: 1,
+                            // fill: false,
+                            // tension: 0.1,
+                            // spanGaps: true
+                        }],
+                        yMin: target,
+                        yMax: target,
                         borderColor: 'rgb(255, 99, 132)',
                         borderWidth: 2,
                     },
                     label: {
                         display: true,
-                        content: 'Poids Cible 70 kg',
-                        // yValue: 70,
+                        content: 'Poids Cible ' + target + ' Kg',
+                        yValue: target,
                         color: 'rgb(255, 99, 132)',
                         backgroundColor: '#ffff',
                         position: 'start',

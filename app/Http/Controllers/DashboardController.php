@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Measurement;
 use App\Models\User;
 use App\Models\Morphology;
+use App\Models\Target;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Decimal;
 use Carbon\Carbon;
@@ -39,6 +40,8 @@ class DashboardController extends Controller
         $mesures = Measurement::getUserMesuresOfCurrentMonth($user, $firstDay, $lastDay);
         
         $morpho = Morphology::getUserMorphology($user);
+
+        $target = Target::getLastTarget($user) ?? null;
 
         if($morpho !== null) {
             $morphoCoefficient = $this->getCoeffMorpho($morpho->morpho);
@@ -75,8 +78,10 @@ class DashboardController extends Controller
 
                $imcsCurrentMonth[$firstDay] = $this->calculateImc($lastMonthMesures);
            }
+
         } 
         
+        $targetWeight = $this->targetWeight($mesure, $target);
 
         return view('dashboard', [
             'user' => $user,
@@ -86,6 +91,7 @@ class DashboardController extends Controller
             'weightsCurrentMonth' => $weightsCurrentMonth,
             'imcsCurrentMonth' => $imcsCurrentMonth ,
             'weightsRange' => $weightsRange,
+            'targetWeight' => $targetWeight,
             'age' => $age,
             'morpho' => $morpho,
             'morphoCoefficient' =>  $morphoCoefficient,
@@ -270,4 +276,17 @@ class DashboardController extends Controller
         return $coeff;
     }
 
+
+    public function targetWeight($mesure, $target = null)
+    {
+        $targetWeight = 0;
+        
+        if($mesure !== null) {
+            if($target !== null) {
+                $targetWeight = $mesure->weight + $target->weight;
+            }
+        }
+
+        return $targetWeight;
+    }
 }
