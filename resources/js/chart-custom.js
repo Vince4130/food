@@ -1,26 +1,34 @@
-const ctx = document.getElementById('weightsChart');
+const ctx    = document.getElementById('weightsChart');
 const ctxImc = document.getElementById('imcsChart');
-var weights = document.querySelector("#weights").value;
-var imcs = document.querySelector("#imcs").value;
-var target = document.querySelector("#targetWeight").value;
+var weights  = document.querySelector("#weights").value;
+var imcs     = document.querySelector("#imcs").value;
+var target   = document.querySelector("#targetWeight").value;
+var imc      = document.querySelector("#targetImc").value;
+
 weights = JSON.parse(weights);
-imcs = JSON.parse(imcs);
-target = JSON.parse(target)
+imcs    = JSON.parse(imcs);
+target  = JSON.parse(target);
+imc     = JSON.parse(imc);
 
 const labels = Object.keys(weights);
-const data = Object.values(weights);
+const data   = Object.values(weights);
 console.log(labels);
 const formatData = data.map(value => value !== null ? value : NaN);
 
 const labelsI = Object.keys(imcs);
-const dataI = Object.values(imcs);
+const dataI   = Object.values(imcs);
 console.log(labels);
 const formatDataI = dataI.map(value => value !== null ? value : NaN);
 
-const labelT = Object.keys(target);
-const dataT = Object.values(target);
+const labelsT = Object.keys(target);
+const dataT   = Object.values(target);
 console.log(labels);
 const formatDataT = dataT.map(value => value !== null ? value : NaN);
+
+const labelsImc = Object.keys(imc);
+const dataImc   = Object.values(imc);
+console.log(labels);
+const formatDataImc = dataImc.map(value => value !== null ? value : NaN);
 
 new Chart(ctx, {
     type: 'line',
@@ -125,15 +133,23 @@ new Chart(ctxImc, {
                 annotations: {
                     line1: {
                         type: 'line',
-                        yMin: 22.9,
-                        yMax: 22.9,
+                        datasets: [{
+                            // label: 'Poids en Kg',
+                            data: imc,
+                            // borderWidth: 1,
+                            // fill: false,
+                            // tension: 0.1,
+                            // spanGaps: true
+                        }],
+                        yMin: imc,
+                        yMax: imc,
                         borderColor: 'rgb(255, 99, 132)',
                         borderWidth: 2,
                     },
                     label: {
                         display: true,
-                        content: 'Imc Cible',
-                        // yValue: 70,
+                        content: 'Imc Cible ' + imc,
+                        yValue: imc,
                         color: 'rgb(255, 99, 132)',
                         backgroundColor: '#ffff',
                         position: 'start',
