@@ -73,7 +73,8 @@
                 </div>
                 <div class="dashboard__data data__weight dark:bg-gray-800">
                     <input type="hidden" name="weights" id="weights" value="{{ json_encode($weightsCurrentMonth) }}">
-                    <input type="hidden" name="targetWeight" id="targetWeight" value="{{ json_encode($targetWeight) }}">  
+                    <input type="hidden" name="targetWeight" id="targetWeight" value="{{ json_encode($targetWeight) }}">
+                    <input type="hidden" name="targetImc" id="targetImc" value="{{ json_encode($targetImc) }}">  
                     <div class="dashboard__data--weightsChart">
                         <canvas id="weightsChart"></canvas>
                     </div>
