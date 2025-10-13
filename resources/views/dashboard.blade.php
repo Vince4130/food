@@ -72,6 +72,7 @@
                     </div>
                 </div>
                 <div class="dashboard__data data__weight dark:bg-gray-800">
+                    @php $targetWeight = number_format($targetWeight,2,'.','') @endphp
                     <input type="hidden" name="weights" id="weights" value="{{ json_encode($weightsCurrentMonth) }}">
                     <input type="hidden" name="targetWeight" id="targetWeight" value="{{ json_encode($targetWeight) }}">
                     <input type="hidden" name="targetImc" id="targetImc" value="{{ json_encode($targetImc) }}">  
