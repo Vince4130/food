@@ -13,7 +13,7 @@
         @endif
     </header>
 
-    <form method="post" action="{{ route('targets.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('targets.update') }}" class="mt-6 space-y-6" id="myForm">
         @csrf
 
         <input type="hidden" name="target_id" id="target_id" value="{{ $target->id }}">
@@ -61,12 +61,19 @@
             </x-primary-button>
         </div>
     </form>
-    <script>
+    <script> 
         var current = document.querySelector('#current_weight');
         var weight  = document.querySelector('#weight');
-        current.innerText = weight.valueAsNumber + ' Kg';
+        
+        current.innerText = parseFloat(weight.value).toFixed(2); + ' Kg';
+        
         weight.addEventListener('change', () => {
-            current.innerText = weight.valueAsNumber + ' Kg';
+            current.innerText = parseFloat(weight.value).toFixed(2); + ' Kg';
+        });
+
+        document.querySelector('#myForm').addEventListener('submit', function() {
+            let weight = document.querySelector('#weight');
+            weight.value = parseFloat(weight.value).toFixed(2);
         });
     </script>
 </section>

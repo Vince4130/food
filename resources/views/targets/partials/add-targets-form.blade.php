@@ -24,7 +24,7 @@
         </p> -->
     </header>
 
-    <form method="POST" action="{{ route('targets.store') }}" class="mt-6 space-y-6">
+    <form method="POST" action="{{ route('targets.store') }}" class="mt-6 space-y-6" id="form">
         @csrf
 
         <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
@@ -79,9 +79,16 @@
     <script>
         var current = document.querySelector('#current_weight');
         var weight  = document.querySelector('#weight');
-        current.innerText = weight.valueAsNumber + ' Kg';
+        
+        current.innerText = parseFloat(weight.value).toFixed(2); + ' Kg';
+        
         weight.addEventListener('change', () => {
-            current.innerText = weight.valueAsNumber + ' Kg';
+            current.innerText = parseFloat(weight.value).toFixed(2); + ' Kg';
+        });
+
+        document.querySelector('#form').addEventListener('submit', function() {
+            let weight = document.querySelector('#weight');
+            weight.value = parseFloat(weight.value).toFixed(2);
         });
     </script>
 </section>
