@@ -76,8 +76,13 @@ class TargetController extends Controller
 
         $targetStart = ($existTargetDates !== null) ? Carbon::create($existTargetDates->startDate)->format('d/m/Y') : "";
         $targetEnd   = ($existTargetDates !== null) ? Carbon::create($existTargetDates->endDate)->format('d/m/Y') : "";
-    
-        if(!$existTargetDates) {
+        
+        // Verification cote serveur validite weight => faite dans le form en js
+        // $request->merge([
+        //     'weight' => number_format((float) $request->weight, 2, '.','')
+        // ]);
+
+        if($existTargetDates === null) {
             
             $request->validate([
                 'weight' => ['bail', 'required', 'different:0', 'decimal:2'],
