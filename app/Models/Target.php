@@ -56,8 +56,8 @@ class Target extends Model
             ->select('targets.id', 'weight', 'startDate', 'endDate', 'user_id')
             ->join('users', 'users.id', '=', 'targets.user_id')
             ->where('users.id', $user->id)
-            ->whereBetween('startDate', [$startDate, $endDate])
-            ->orWhereBetween('endDate', [$startDate, $endDate])
+            ->where('startDate', '<=', $endDate)
+            ->where('endDate', '>=', $startDate)
             ->first();
         
         return $dates;
