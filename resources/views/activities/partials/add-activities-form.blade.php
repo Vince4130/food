@@ -29,7 +29,7 @@
         <div class="mt-4 activity">
             <div class="activity__level mt-4">
                 <div class="activity__level--name">
-                    <p><label for="sedentary">Sédentaire !!!!</label></p>
+                    <p><label for="sedentary">Sédentaire</label></p>
                     <p><input id="sedentary" class="block mt-1" type="radio" name="activity" value="sedentary" {{ (isset($userActivityLevel) && $userActivityLevel->activity == 'sedentary') ? 'checked' : '' }} {{ isset($userActivityLevel) ? 'disabled' : '' }} {{ old('activity') == 'sedentary' ? 'checked' : '' }} required autofocus autocomplete="activity" /></p>
                 </div>
                 <div class="activity__level--name">
